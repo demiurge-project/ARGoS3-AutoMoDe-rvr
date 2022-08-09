@@ -219,6 +219,7 @@ link_libraries(${catkin_LIBRARIES})
 
 set(ARGOS_INCLUDE_DIRS ${ARGOS_INCLUDE_DIRS} /home/$ENV{USER}/demiurge-rvr-dao/install/include)
 set(ARGOS_LIBRARY_DIRS ${ARGOS_LIBRARY_DIRS} /home/$ENV{USER}/demiurge-rvr-dao/devel/lib)
+message(STATUS "ARGOS_LIBRARY_DIRS: ${ARGOS_LIBRARY_DIRS}")
 
 
 #
