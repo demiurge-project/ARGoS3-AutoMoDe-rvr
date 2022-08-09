@@ -113,6 +113,36 @@ namespace argos
 			LOGERR << "Error while initializing an Actuator!\n";
 		}
 
+		if (m_bRealRobot)
+		{
+			/* get the first reading of each sensor to instantiate data structures */
+			if (m_pcGroundSensor != NULL)
+			{
+				const CCI_RVRGroundColorSensor::SReading &reading = m_pcGroundSensor->GetReading();
+				m_pcRobotState->SetGroundInput(reading);
+			}
+			if (m_pcLightSensor != NULL)
+			{
+				const CCI_RVRLightSensor::SReading &reading = m_pcLightSensor->GetReading();
+				m_pcRobotState->SetLightInput(reading);
+			}
+			if (m_pcProximitySensor != NULL)
+			{
+				const CCI_RVRProximitySensor::TReadings &readings = m_pcProximitySensor->GetReadings();
+				m_pcRobotState->SetProximityInput(readings);
+			}
+			if (m_pcLidarSensor != NULL)
+			{
+				const CCI_RVRLidarSensor::TReadings &readings = m_pcLidarSensor->GetReadings();
+				m_pcRobotState->SetLidarInput(readings);
+			}
+			if (m_pcOmnidirectionalCameraSensor != NULL)
+			{
+				const CCI_ColoredBlobOmnidirectionalCameraSensor::SReadings &readings = m_pcOmnidirectionalCameraSensor->GetReadings();
+				m_pcRobotState->SetOmnidirectionalCameraInput(readings);
+			}
+		}
+
 		/*
 		 * Starts actuation.
 		 */
