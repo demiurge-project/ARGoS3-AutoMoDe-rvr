@@ -22,13 +22,13 @@
   <controllers>
     <!-- TRANSMITTER -->
     <automode_controller id="automode"
-                        library="/home/raptus/ARGoS3-AutoMoDe/build/src/libautomode.so">
+                        library="/home/raptus/ARGoS3-AutoMoDe/devel/lib/libautomode.so">
       <actuators>
         <rvr_wheels implementation="default"/>
         <rvr_rgb_leds implementation="default" medium="leds"/>
       </actuators>
       <sensors>
-        <rvr_proximity implementation="default" range="0.3" show_rays="false"/>
+        <rvr_proximity implementation="default" range="0.4" show_rays="false"/>
         <rvr_light implementation="default" show_rays="false"/>
         <rvr_lidar implementation="default" show_rays="false"/>
         <rvr_ground implementation="rot_z_only"/>
@@ -96,7 +96,7 @@
     <body orientation="0,0,0" position="0,-0.4,0" />
     <controller config="automode" />
   </rvr>
-  <rvr id="rvr_02_40">
+  <!-- <rvr id="rvr_02_40">
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
   </rvr>
@@ -111,7 +111,7 @@
   <rvr id="rvr_05_55">
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
-  </rvr>
+  </rvr> -->
   </arena>
 
   <!-- ******************* -->

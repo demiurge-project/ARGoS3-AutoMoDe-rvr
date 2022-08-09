@@ -61,6 +61,7 @@ namespace argos
 
 		m_unRobotID = atoi(GetId().substr(5, 6).c_str());
 		m_pcRobotState->SetRobotIdentifier(m_unRobotID);
+		m_pcRobotState->InitROS();
 
 		/*
 		 * If a FSM configuration is given as parameter of the experiment file, create a FSM from it

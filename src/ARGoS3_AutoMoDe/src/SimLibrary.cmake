@@ -53,7 +53,7 @@ set(AUTOMODE_SOURCES
 
 
 add_library(automode SHARED ${AUTOMODE_HEADERS} ${AUTOMODE_SOURCES})
-target_link_libraries(automode argos3plugin_${ARGOS_BUILD_FOR}_rvr)
+target_link_libraries(automode argos3plugin_${ARGOS_BUILD_FOR}_rvr argos3_demiurge_rvr_dao)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 add_executable(automode_main AutoMoDeMain.cpp)
