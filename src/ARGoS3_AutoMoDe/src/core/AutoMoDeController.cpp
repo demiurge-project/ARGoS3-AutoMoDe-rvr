@@ -89,10 +89,6 @@ namespace argos
 		/*
 		 *  Initializing sensors and actuators
 		 */
-		if (m_bRealRobot)
-		{
-			return;
-		}
 		try
 		{
 			m_pcProximitySensor = GetSensor<CCI_RVRProximitySensor>("rvr_proximity");
@@ -100,7 +96,8 @@ namespace argos
 			m_pcGroundSensor = GetSensor<CCI_RVRGroundColorSensor>("rvr_ground");
 			m_pcLidarSensor = GetSensor<CCI_RVRLidarSensor>("rvr_lidar");
 			m_pcOmnidirectionalCameraSensor = GetSensor<CCI_ColoredBlobOmnidirectionalCameraSensor>("colored_blob_omnidirectional_camera");
-			m_pcOmnidirectionalCameraSensor->Enable();
+			if (!m_bRealRobot)
+				m_pcOmnidirectionalCameraSensor->Enable();
 		}
 		catch (CARGoSException ex)
 		{
