@@ -53,8 +53,8 @@ namespace argos
 
 	void AutoMoDeBehaviourStop::ControlStep()
 	{
-		std::cout << m_pcRobotDAO->GetProximityReading().Value << std::endl;
-		std::cout << m_pcRobotDAO->GetProximityReading().Angle << std::endl;
+		std::cout << "Value : " << m_pcRobotDAO->GetProximityReading().Value << std::endl;
+		std::cout << "Angle : " << m_pcRobotDAO->GetProximityReading().Angle << std::endl;
 		m_pcRobotDAO->SetWheelsVelocity(0, 0);
 		m_bLocked = false;
 	}
