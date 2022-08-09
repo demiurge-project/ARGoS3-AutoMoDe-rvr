@@ -1,5 +1,1 @@
-if(ARGOS_BUILD_FOR_SIMULATOR)
-	include(SimLibrary.cmake)
-elseif(ARGOS_BUILD_FOR_RVR)
-	include(RealLibrary.cmake)
-endif(ARGOS_BUILD_FOR_SIMULATOR)
+/opt/ros/noetic/share/catkin/cmake/toplevel.cmake
