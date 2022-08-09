@@ -53,7 +53,6 @@ namespace argos
 
 	void AutoMoDeBehaviourStop::ControlStep()
 	{
-		std::cout << m_pcRobotDAO->GetGroundReading() << std::endl;
 		m_pcRobotDAO->SetWheelsVelocity(0, 0);
 		m_bLocked = false;
 	}
