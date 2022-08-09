@@ -200,7 +200,7 @@ namespace argos
 		 * 3. Update Actuators
 		 */
 		// make sure we publish at each time step in case ROS is used
-		m_pcRobotState->SetWheelsVelocity(m_pcRobotState->GetLeftWheelVelocity(), m_pcRobotState->GetRightWheelVelocity());
+		// m_pcRobotState->SetWheelsVelocity(m_pcRobotState->GetLeftWheelVelocity(), m_pcRobotState->GetRightWheelVelocity());
 		if (!m_bRealRobot)
 		{
 			if (m_pcWheelsActuator != NULL)
