@@ -159,6 +159,10 @@ namespace argos
 				m_pcRobotState->SetOmnidirectionalCameraInput(readings);
 			}
 		}
+		else
+		{
+			ros::spinOnce();
+		}
 
 		/*
 		 * 2. Execute step of FSM
