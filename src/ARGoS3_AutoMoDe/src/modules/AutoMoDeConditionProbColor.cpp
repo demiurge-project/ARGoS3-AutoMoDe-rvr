@@ -82,9 +82,9 @@ namespace argos
     {
         CColor ptColorPerceived = m_pcRobotDAO->GetGroundReading();
         // saturate the color
-        CColor ptSaturatedColor = Saturate(ptColorPerceived);
+        // CColor ptSaturatedColor = Saturate(ptColorPerceived);
         // get closest label
-        CColor ptClosestLabel = GetClosestLabel(ptSaturatedColor);
+        CColor ptClosestLabel = GetClosestLabel(ptColorPerceived);
         std::cout << "Color perceived: " << ptColorPerceived << std::endl;
         std::cout << "Closest label: " << ptClosestLabel << std::endl;
         if (ptClosestLabel == m_cColorParameter)
