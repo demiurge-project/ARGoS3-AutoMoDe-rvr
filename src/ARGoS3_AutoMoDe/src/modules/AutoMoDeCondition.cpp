@@ -178,7 +178,7 @@ namespace argos
 			cColorParameter = CColor(126, 79, 154);
 			break;
 		case 6:
-			cColorParameter = CColor::CYAN;
+			cColorParameter = CColor::GRAY50;
 			break;
 		default:
 			cColorParameter = CColor::BLACK;
