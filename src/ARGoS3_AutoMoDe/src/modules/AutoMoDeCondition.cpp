@@ -228,15 +228,16 @@ namespace argos
 	{
 		CColor cClosestLabel = CColor::GRAY50;
 		Real fMinDistance = std::numeric_limits<Real>::max();
+		Real f_h, f_s, f_v, f_h_current, f_s_current, f_v_current;
+		// store perceived color in f_h, f_s, f_v
+		RGBtoHSV(pc_color, f_h, f_s, f_v);
 		for (UInt32 i = 0; i < 7; i++)
 		{
 			CColor cLabel = GetColorParameter(i);
-			Real f_h, f_s, f_v, f_h_closest, f_s_closest, f_v_closest;
-			RGBtoHSV(pc_color, f_h, f_s, f_v);
-			RGBtoHSV(cLabel, f_h_closest, f_s_closest, f_v_closest);
+			RGBtoHSV(cLabel, f_h_current, f_s_current, f_v_current);
 			std::cout << "Color " << cLabel << " | ";
 			std::cout << "Hue : " << f_h << " | ";
-			Real fDistance = Abs(f_h - f_h_closest);
+			Real fDistance = Abs(f_h - f_h_current);
 			std::cout << "Distance :" << fDistance << std::endl;
 			if (fDistance < fMinDistance && fDistance < 15)
 			{
