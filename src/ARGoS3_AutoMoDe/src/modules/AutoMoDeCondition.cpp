@@ -163,7 +163,7 @@ namespace argos
 			break;
 		case 2:
 			// blue physical patches
-			cColorParameter = CColor(60, 170, 200);
+			cColorParameter = CColor::BLUE;
 			break;
 		case 3:
 			// red physical patches
