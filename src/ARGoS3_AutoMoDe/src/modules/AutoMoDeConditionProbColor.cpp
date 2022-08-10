@@ -81,9 +81,11 @@ namespace argos
     bool AutoMoDeConditionProbColor::Verify()
     {
         CColor ptColorPerceived = m_pcRobotDAO->GetGroundReading();
-
-        // is it not sensitive to noise ?
-        if (ptColorPerceived == m_cColorParameter)
+        // saturate the color
+        CColor ptSaturatedColor = Saturate(ptColorPerceived);
+        // get closest label
+        CColor ptClosestLabel = GetClosestLabel(ptSaturatedColor);
+        if (ptClosestLabel == m_cColorParameter)
         {
             return EvaluateBernoulliProbability(m_fProbability);
         }
