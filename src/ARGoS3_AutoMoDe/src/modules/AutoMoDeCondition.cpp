@@ -235,6 +235,7 @@ namespace argos
 			RGBtoHSV(pc_color, f_h, f_s, f_v);
 			RGBtoHSV(cLabel, f_h_closest, f_s_closest, f_v_closest);
 			Real fDistance = std::abs(f_h - f_h_closest);
+			std::cout << "Distance :" << fDistance << std::endl;
 			if (fDistance < fMinDistance && fDistance < 30)
 			{
 				fMinDistance = fDistance;
