@@ -282,10 +282,15 @@ namespace argos
 		else
 		{
 			f_s = 0;
-			f_h = -1;
+			f_h = 0;
+			f_v = 0;
 			return;
 		}
-		if (f_r == f_max)
+		if (f_delta == 0)
+		{
+			f_h = 0;
+		}
+		else if (f_r == f_max)
 		{
 			f_h = (f_g - f_b) / f_delta;
 		}
