@@ -163,7 +163,7 @@ namespace argos
 			break;
 		case 2:
 			// blue physical patches
-			cColorParameter = CColor::GREEN;
+			cColorParameter = CColor::BLUE;
 			break;
 		case 3:
 			// red physical patches
@@ -238,7 +238,7 @@ namespace argos
 			RGBtoHSV(cLabel, f_h_current, f_s_current, f_v_current);
 			std::cout << "Color " << cLabel << " | ";
 			std::cout << "Hue " << f_h_current << std::endl;
-			Real fDistance = Abs(f_h - f_h_current);
+			Real fDistance = Abs(f_h - f_h_current) + Abs(f_s - f_s_current) + Abs(f_v - f_v_current);
 			std::cout << "Distance :" << fDistance << std::endl;
 			if (fDistance < fMinDistance && fDistance < 15)
 			{
