@@ -171,7 +171,7 @@ namespace argos
 			break;
 		case 4:
 			// yellow physical patches
-			cColorParameter = CColor(252, 238, 33);
+			cColorParameter = CColor::YELLOW;
 			break;
 		case 5:
 			// purple physical patches
@@ -226,7 +226,7 @@ namespace argos
 
 	CColor AutoMoDeCondition::GetClosestLabel(CColor pc_color)
 	{
-		CColor cClosestLabel = CColor::GRAY50;
+		CColor cClosestLabel = CColor::WHITE;
 		Real fMinDistance = std::numeric_limits<Real>::max();
 		Real f_h, f_s, f_v, f_h_current, f_s_current, f_v_current;
 		// store perceived color in f_h, f_s, f_v
@@ -241,6 +241,7 @@ namespace argos
 			std::cout << "Distance :" << fDistance << std::endl;
 			if (fDistance < fMinDistance && fDistance < 15)
 			{
+				std::cout << "new min distance : " << fDistance << std::endl;
 				fMinDistance = fDistance;
 				cClosestLabel = cLabel;
 			}
