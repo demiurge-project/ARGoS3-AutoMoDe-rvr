@@ -35,7 +35,7 @@
 	      <rvr_ground implementation="rot_z_only" />
 	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
       </sensors>
-    <params fsm-config="--nstates 2 --s0 0 --rwm0 20 --n0 1 --n0x0 0 --c0x0 6 --p0x0 1.0 --l0x0 4 --s1 1" real-robot="false"/>
+    <params fsm-config="--nstates 2 --s0 0 --rwm0 20 --n0 1 --n0x0 0 --c0x0 6 --p0x0 1.0 --l0x0 4 --s1 1" real-robot="true"/>
   </automode_controller>
   </controllers>
 
@@ -132,12 +132,12 @@
   <!-- * Visualization * -->
   <!-- ***************** -->
   <visualization>
-    <qt-opengl>
+    <!-- <qt-opengl>
       <camera>
           <placement idx="0" position="3,0,2" look_at="1,0,0" />
           <placement idx="1" position="0,0,3" look_at="0,0,0" />
       </camera>
-    </qt-opengl>
+    </qt-opengl> -->
   </visualization>
 
 </argos-configuration>
