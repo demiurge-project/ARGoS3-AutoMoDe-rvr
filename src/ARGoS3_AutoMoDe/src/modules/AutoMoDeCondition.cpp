@@ -231,17 +231,17 @@ namespace argos
 		Real f_h, f_s, f_v, f_h_current, f_s_current, f_v_current;
 		// store perceived color in f_h, f_s, f_v
 		RGBtoHSV(pc_color, f_h, f_s, f_v);
+		std::cout << "Hue of perceived color : " << f_h << std::endl;
 		for (UInt32 i = 0; i < 7; i++)
 		{
 			CColor cLabel = GetColorParameter(i);
 			RGBtoHSV(cLabel, f_h_current, f_s_current, f_v_current);
 			std::cout << "Color " << cLabel << " | ";
-			std::cout << "Hue : " << f_h << " | ";
+			std::cout << "Hue " << f_h_current << std::endl;
 			Real fDistance = Abs(f_h - f_h_current);
 			std::cout << "Distance :" << fDistance << std::endl;
 			if (fDistance < fMinDistance && fDistance < 15)
 			{
-				std::cout << "new min distance : " << fDistance << std::endl;
 				fMinDistance = fDistance;
 				cClosestLabel = cLabel;
 			}
