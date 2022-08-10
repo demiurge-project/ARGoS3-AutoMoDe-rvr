@@ -154,9 +154,14 @@ namespace argos
 		CColor Saturate(CColor pc_color);
 
 		/*
-		 * Matches a color with the closest encoded one.
+		 * Matches a color with the closest label.
 		 */
 		CColor GetClosestLabel(CColor pc_color);
+
+		/*
+		 * Converts a color from RGB to HSV.
+		 */
+		void RGBtoHSV(const CColor &c_color, Real &f_h, Real &f_s, Real &f_v);
 	};
 }
 

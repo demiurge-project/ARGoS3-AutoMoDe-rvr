@@ -85,6 +85,8 @@ namespace argos
         CColor ptSaturatedColor = Saturate(ptColorPerceived);
         // get closest label
         CColor ptClosestLabel = GetClosestLabel(ptSaturatedColor);
+        std::cout << "Color perceived: " << ptColorPerceived << std::endl;
+        std::cout << "Closest label: " << ptClosestLabel << std::endl;
         if (ptClosestLabel == m_cColorParameter)
         {
             return EvaluateBernoulliProbability(m_fProbability);

@@ -226,19 +226,77 @@ namespace argos
 
 	CColor AutoMoDeCondition::GetClosestLabel(CColor pc_color)
 	{
-		CColor cClosestLabel = CColor();
+		CColor cClosestLabel = CColor::GRAY50;
 		Real fMinDistance = std::numeric_limits<Real>::max();
 		for (UInt32 i = 0; i < 7; i++)
 		{
 			CColor cLabel = GetColorParameter(i);
-			Real fDistance = (CVector3(cLabel.GetRed(), cLabel.GetGreen(), cLabel.GetBlue()) - CVector3(pc_color.GetRed(), pc_color.GetGreen(), pc_color.GetBlue())).Length();
-			if (fDistance < fMinDistance)
+			Real f_h, f_s, f_v, f_h_closest, f_s_closest, f_v_closest;
+			RGBtoHSV(pc_color, f_h, f_s, f_v);
+			RGBtoHSV(cLabel, f_h_closest, f_s_closest, f_v_closest);
+			Real fDistance = std::abs(f_h - f_h_closest);
+			if (fDistance < fMinDistance && fDistance < 30)
 			{
 				fMinDistance = fDistance;
 				cClosestLabel = cLabel;
 			}
 		}
 		return cClosestLabel;
+	}
+
+	void AutoMoDeCondition::RGBtoHSV(const CColor &c_color, Real &f_h, Real &f_s, Real &f_v)
+	{
+		// convert RGB to HSV
+		Real f_r = c_color.GetRed() / 255.0;
+		Real f_g = c_color.GetGreen() / 255.0;
+		Real f_b = c_color.GetBlue() / 255.0;
+		Real f_min = f_r;
+		if (f_g < f_min)
+		{
+			f_min = f_g;
+		}
+		if (f_b < f_min)
+		{
+			f_min = f_b;
+		}
+		Real f_max = f_r;
+		if (f_g > f_max)
+		{
+			f_max = f_g;
+		}
+		if (f_b > f_max)
+		{
+			f_max = f_b;
+		}
+		Real f_delta = f_max - f_min;
+		f_v = f_max;
+		if (f_max != 0)
+		{
+			f_s = f_delta / f_max;
+		}
+		else
+		{
+			f_s = 0;
+			f_h = -1;
+			return;
+		}
+		if (f_r == f_max)
+		{
+			f_h = (f_g - f_b) / f_delta;
+		}
+		else if (f_g == f_max)
+		{
+			f_h = 2 + (f_b - f_r) / f_delta;
+		}
+		else
+		{
+			f_h = 4 + (f_r - f_g) / f_delta;
+		}
+		f_h *= 60;
+		if (f_h < 0)
+		{
+			f_h += 360;
+		}
 	}
 
 }
