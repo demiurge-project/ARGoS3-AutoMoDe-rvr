@@ -194,6 +194,7 @@ namespace argos
 		/*
 		 * 2. Execute step of FSM
 		 */
+		// ensure connection to real robot before processing
 		if (!m_bRealRobot || m_pcRobotState->HasRealRobotConnection())
 			m_pcFiniteStateMachine->ControlStep();
 
