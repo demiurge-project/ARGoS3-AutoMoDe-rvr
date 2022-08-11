@@ -194,7 +194,8 @@ namespace argos
 		/*
 		 * 2. Execute step of FSM
 		 */
-		m_pcFiniteStateMachine->ControlStep();
+		if (!m_bRealRobot || m_pcRobotState->HasRealRobotConnection())
+			m_pcFiniteStateMachine->ControlStep();
 
 		/*
 		 * 3. Update Actuators
