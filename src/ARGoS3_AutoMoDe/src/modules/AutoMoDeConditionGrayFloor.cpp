@@ -53,6 +53,7 @@ namespace argos
 
   bool AutoMoDeConditionGrayFloor::Verify()
   {
+    std::cout << m_pcRobotDAO->GetGroundReading().ToGrayScale() << std::endl;
     if (m_fGroundThresholdRange.WithinMinBoundExcludedMaxBoundExcluded(m_pcRobotDAO->GetGroundReading().ToGrayScale()))
     {
       return EvaluateBernoulliProbability(m_fProbability);
