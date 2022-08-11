@@ -156,29 +156,19 @@ namespace argos
 		switch (un_value)
 		{
 		case 0:
-			cColorParameter = CColor::BLACK;
-			break;
-		case 1:
 			cColorParameter = CColor::GREEN;
 			break;
-		case 2:
+		case 1:
 			// blue physical patches
 			cColorParameter = CColor::BLUE;
 			break;
-		case 3:
+		case 2:
 			// red physical patches
 			cColorParameter = CColor::RED;
 			break;
-		case 4:
+		case 3:
 			// yellow physical patches
 			cColorParameter = CColor::YELLOW;
-			break;
-		case 5:
-			// purple physical patches
-			cColorParameter = CColor(126, 79, 154);
-			break;
-		case 6:
-			cColorParameter = CColor::GRAY50;
 			break;
 		default:
 			cColorParameter = CColor::BLACK;
@@ -232,7 +222,7 @@ namespace argos
 		// store perceived color in f_h, f_s, f_v
 		RGBtoHSV(pc_color, f_h, f_s, f_v);
 		std::cout << "Hue of perceived color : " << f_h << std::endl;
-		for (UInt32 i = 0; i < 7; i++)
+		for (UInt32 i = 0; i < 4; i++)
 		{
 			CColor cLabel = GetColorParameter(i);
 			RGBtoHSV(cLabel, f_h_current, f_s_current, f_v_current);
