@@ -57,7 +57,7 @@ namespace argos
 		CVector2 sProxVector(0, CRadians::ZERO);
 		CVector2 sResultVector(0, CRadians::ZERO);
 		auto cLidarReading = m_pcRobotDAO->GetAttractionVectorToNeighbors(m_unRepulsionParameter);
-		// std::cout << "Attraction vector : " << cLidarReading.Value << ", " << cLidarReading.Angle << std::endl;
+		std::cout << "Attraction vector : " << cLidarReading.Value << ", " << cLidarReading.Angle << std::endl;
 
 		if (cLidarReading.Value > 0.0f)
 		{
