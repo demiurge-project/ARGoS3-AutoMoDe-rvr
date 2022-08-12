@@ -65,7 +65,7 @@ namespace argos
 		}
 
 		sProxVector = CVector2(m_pcRobotDAO->GetProximityReading().Value, m_pcRobotDAO->GetProximityReading().Angle);
-		std::cout << "Obstacle vector : " << sProxVector.Length() << ", " << sProxVector.Angle().SignedNormalize() << std::endl;
+		std::cout << "Prox vector : " << sProxVector.Length() << ", " << sProxVector.Angle().SignedNormalize() << std::endl;
 		sResultVector = -m_unRepulsionParameter * sRabVector - sProxVector;
 
 		if (sResultVector.Length() < 0.1)
