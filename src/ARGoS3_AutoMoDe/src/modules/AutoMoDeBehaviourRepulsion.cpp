@@ -64,7 +64,7 @@ namespace argos
 		}
 
 		sProxVector = CVector2(m_pcRobotDAO->GetProximityReading().Value, m_pcRobotDAO->GetProximityReading().Angle);
-		sResultVector = -m_unRepulsionParameter * sRabVector - 5 * sProxVector;
+		sResultVector = -m_unRepulsionParameter * sRabVector - sProxVector;
 
 		if (sResultVector.Length() < 0.1)
 		{
