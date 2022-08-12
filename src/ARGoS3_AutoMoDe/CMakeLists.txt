@@ -220,7 +220,7 @@ link_libraries(${catkin_LIBRARIES})
 #set(ARGOS_INCLUDE_DIRS ${ARGOS_INCLUDE_DIRS} /home/$ENV{USER}/demiurge-rvr-dao/install/include)
 #set(ARGOS_LIBRARY_DIRS ${ARGOS_LIBRARY_DIRS} /home/$ENV{USER}/demiurge-rvr-dao/devel/lib)
 include_directories(/home/$ENV{USER}/demiurge-rvr-dao/install/include)
-link_libraries(/home/$ENV{USER}/demiurge-rvr-dao/devel/lib)
+link_libraries(/home/$ENV{USER}/demiurge-rvr-dao/install/lib/argos3)
 
 
 #
