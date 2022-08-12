@@ -98,7 +98,7 @@ namespace argos
 		case OBSTACLE_AVOIDANCE:
 		{
 			m_unTurnSteps -= 1;
-			auto ptWheelSpeed = m_pcRobotDAO->GetMaxVelocity() / 2.0f;
+			Real ptWheelSpeed = m_pcRobotDAO->GetMaxVelocity() / 2.0f;
 			switch (m_eTurnDirection)
 			{
 			case LEFT:
