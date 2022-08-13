@@ -45,7 +45,7 @@ namespace argos
 
   void AutoMoDeConditionBlackFloor::Init()
   {
-    m_fGroundThreshold = 0.1;
+    m_fGroundThreshold = 10.0f;
     std::map<std::string, Real>::iterator it = m_mapParameters.find("p");
     if (it != m_mapParameters.end())
     {
