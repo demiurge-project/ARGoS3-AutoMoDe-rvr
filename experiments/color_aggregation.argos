@@ -22,7 +22,7 @@
   <controllers>
     <!-- TRANSMITTER -->
     <automode_controller id="automode"
-                        library="/home/raptus/ARGoS3-AutoMoDe/build/src/libautomode.so">
+                        library="/home/raptus/ARGoS3-AutoMoDe/devel/lib/libautomode.so">
       <actuators>
         <rvr_wheels implementation="default"/>
         <rvr_rgb_leds implementation="default" medium="leds"/>
@@ -35,7 +35,7 @@
 	      <rvr_ground implementation="rot_z_only" />
 	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
       </sensors>
-    <params fsm-config="--nstates 1 --s0 0 --rwm0 5" real-robot="false"/>
+    <params fsm-config="--nstates 2 --s0 3 --rep0 1.0 --n0 1 --n0x0 0 --c0x0 0 --p0x0 0.0 --s1 1" real-robot="false" velocity="30"/>
   </automode_controller>
   </controllers>
 
