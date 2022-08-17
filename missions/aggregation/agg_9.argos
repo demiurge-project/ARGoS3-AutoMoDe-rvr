@@ -11,7 +11,7 @@
   <!-- ****************** -->
   <!-- * Loop functions * -->
   <!-- ****************** -->
-  <loop_functions library="/home/rtodesco/rvr-loop-functions/build/loop-functions/rvr-pow/aggregation/librvr_pow_aggregation_loopfunc.so"
+  <loop_functions library="/home/ubuntu/rvr-loop-functions/build/loop-functions/rvr-pow/aggregation/librvr_pow_aggregation_loopfunc.so"
    label="aggregation_one_spot_loop_functions">
     <params dist_radius="1.2" number_robots="5"/>
   </loop_functions>
@@ -22,7 +22,7 @@
   <controllers>
     <!-- TRANSMITTER -->
     <automode_controller id="automode"
-                        library="/home/rtodesco/ARGoS3-AutoMoDe/build/src/libautomode.so">
+                        library="/home/ubuntu/ARGoS3-AutoMoDe/devel/lib/libautomode.so">
       <actuators>
         <rvr_wheels implementation="default"/>
         <rvr_rgb_leds implementation="default" medium="leds"/>
