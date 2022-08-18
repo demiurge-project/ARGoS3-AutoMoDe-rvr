@@ -34,7 +34,7 @@
         <rvr_ground implementation="rot_z_only"/>
 	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
       </sensors>
-    <params fsm-config="--nstates 4 --s0 0 --rwm0 51 --n0 4 --n0x0 1 --c0x0 0 --p0x0 0.82 --n0x1 0 --c0x1 3 --p0x1 1 --w0x1 10.17 --n0x2 1 --c0x2 6 --p0x2 0.81 --l0x2 0 --n0x3 0 --c0x3 5 --p0x3 0.42 --s1 0 --rwm1 84 --n1 3 --n1x0 0 --c1x0 5 --p1x0 0.6 --n1x1 1 --c1x1 0 --p1x1 0.07 --n1x2 0 --c1x2 0 --p1x2 0.34 --s2 1 --n2 2 --n2x0 2 --c2x0 1 --p2x0 0.5 --n2x1 1 --c2x1 6 --p2x1 0.43 --l2x1 2 --s3 1 --n3 1 --n3x0 0 --c3x0 4 --p3x0 4 --w3x0 13.39" real-robot="false" velocity="30"/>
+    <params fsm-config="--nstates 1 --s0 0 --rwm0 55" real-robot="false" velocity="30"/>
   </automode_controller>
   </controllers>
 
