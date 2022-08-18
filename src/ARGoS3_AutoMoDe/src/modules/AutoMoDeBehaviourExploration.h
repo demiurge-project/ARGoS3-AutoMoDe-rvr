@@ -12,6 +12,7 @@
 #define AUTOMODE_BEHAVIOUR_EXPLORATION_H
 
 #include "AutoMoDeBehaviour.h"
+#include "ros/ros.h"
 
 namespace argos
 {
@@ -49,6 +50,8 @@ namespace argos
 
 		Real m_fProximityThreshold;
 		CRange<UInt32> m_cRandomStepsRange;
+
+		ros::Time m_fObstacleEncounterTime, m_fCurrentTime;
 
 		bool IsObstacleInFront(CCI_RVRProximitySensor::SReading s_prox_reading);
 	};

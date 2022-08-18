@@ -57,12 +57,10 @@ namespace argos
 		m_eExplorationState = RANDOM_WALK;
 		m_fProximityThreshold = 0.1;
 		m_bLocked = false;
-		UInt32 fTimeStepFactor = 1000;
 		std::map<std::string, Real>::iterator it = m_mapParameters.find("rwm");
 		if (it != m_mapParameters.end())
 		{
-			m_cRandomStepsRange.SetMax(it->second * fTimeStepFactor);
-			m_cRandomStepsRange.SetMin(fTimeStepFactor);
+			m_cRandomStepsRange.SetMax(it->second);
 		}
 		else
 		{
@@ -85,6 +83,7 @@ namespace argos
 			{
 				m_eExplorationState = OBSTACLE_AVOIDANCE;
 				m_unTurnSteps = (m_pcRobotDAO->GetRandomNumberGenerator())->Uniform(m_cRandomStepsRange);
+				m_fObstacleEncounterTime = ros::Time::now();
 				CRadians cAngle = m_pcRobotDAO->GetProximityReading().Angle.SignedNormalize();
 				if (cAngle.GetValue() < 0)
 				{
@@ -99,7 +98,7 @@ namespace argos
 		}
 		case OBSTACLE_AVOIDANCE:
 		{
-			m_unTurnSteps -= 1;
+			m_fCurrentTime = ros::Time::now();
 			Real ptWheelSpeed = m_pcRobotDAO->GetMaxVelocity();
 			switch (m_eTurnDirection)
 			{
@@ -114,7 +113,7 @@ namespace argos
 				break;
 			}
 			}
-			if (m_unTurnSteps <= 0)
+			if ((m_fCurrentTime - m_fObstacleEncounterTime).toSec() >= m_unTurnSteps * 0.1f)
 			{
 				m_eExplorationState = RANDOM_WALK;
 			}
