@@ -4,7 +4,7 @@
   <!-- * Framework * -->
   <!-- ************* -->
   <framework>
-    <experiment length="9600"
+    <experiment length="0"
                 ticks_per_second="10" random_seed="0"/>
   </framework>
 
@@ -34,7 +34,7 @@
         <rvr_ground implementation="rot_z_only"/>
 	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
       </sensors>
-    <params fsm-config="--nstates 1 --s0 0 --rwm0 100" real-robot="true" velocity="30"/>
+    <params fsm-config="--nstates 1 --s0 0 --rwm0 1" real-robot="true" velocity="30"/>
   </automode_controller>
   </controllers>
 
