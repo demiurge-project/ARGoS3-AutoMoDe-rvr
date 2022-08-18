@@ -61,7 +61,7 @@ namespace argos
 		std::map<std::string, Real>::iterator it = m_mapParameters.find("rwm");
 		if (it != m_mapParameters.end())
 		{
-			m_cRandomStepsRange.SetMin(fTimeStepFactor);
+			// m_cRandomStepsRange.SetMin(fTimeStepFactor);
 			m_cRandomStepsRange.SetMax(it->second * fTimeStepFactor);
 		}
 		else
