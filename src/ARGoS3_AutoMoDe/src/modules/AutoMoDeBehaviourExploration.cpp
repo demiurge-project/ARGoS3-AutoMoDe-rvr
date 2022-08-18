@@ -57,7 +57,7 @@ namespace argos
 		m_eExplorationState = RANDOM_WALK;
 		m_fProximityThreshold = 0.1;
 		m_bLocked = false;
-		UInt32 fTimeStepFactor = 100;
+		UInt32 fTimeStepFactor = 1000;
 		std::map<std::string, Real>::iterator it = m_mapParameters.find("rwm");
 		if (it != m_mapParameters.end())
 		{
