@@ -63,6 +63,8 @@ namespace argos
 		{
 			m_cRandomStepsRange.SetMax(it->second * fTimeStepFactor);
 			m_cRandomStepsRange.SetMin(fTimeStepFactor);
+			std::cout << m_cRandomStepsRange.GetMin() << std::endl;
+			std::cout << m_cRandomStepsRange.GetMax() << std::endl;
 		}
 		else
 		{
