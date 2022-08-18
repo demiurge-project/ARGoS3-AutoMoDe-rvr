@@ -4,15 +4,15 @@
   <!-- * Framework * -->
   <!-- ************* -->
   <framework>
-    <experiment length="120"
-                ticks_per_second="10" random_seed="10"/>
+    <experiment length="0"
+                ticks_per_second="10" random_seed="3"/>
   </framework>
 
   <!-- ****************** -->
   <!-- * Loop functions * -->
   <!-- ****************** -->
-  <loop_functions library="/home/raptus/rvr-loop-functions/build/loop-functions/rvr-pow/color-aggregation/librvr_pow_color_aggregation_loopfunc.so"
-   label="color_aggregation_loop_functions">
+  <loop_functions library="/home/ubuntu/rvr-loop-functions/build/loop-functions/rvr-pow/grid-exploration/librvr_pow_grid_exploration_loopfunc.so"
+   label="grid_exploration_loop_functions">
     <params dist_radius="1.2" number_robots="5"/>
   </loop_functions>
 
@@ -22,7 +22,7 @@
   <controllers>
     <!-- TRANSMITTER -->
     <automode_controller id="automode"
-                        library="/home/raptus/ARGoS3-AutoMoDe/devel/lib/libautomode.so">
+                        library="/home/ubuntu/ARGoS3-AutoMoDe/devel/lib/libautomode.so">
       <actuators>
         <rvr_wheels implementation="default"/>
         <rvr_rgb_leds implementation="default" medium="leds"/>
@@ -32,10 +32,9 @@
         <rvr_light implementation="default" show_rays="false"/>
         <rvr_lidar implementation="default" show_rays="false"/>
         <rvr_ground implementation="rot_z_only"/>
-	      <rvr_ground implementation="rot_z_only" />
 	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
       </sensors>
-    <params fsm-config="--nstates 4 --s0 0 --rwm0 33 --n0 2 --n0x0 1 --c0x0 5 --p0x0 0.6 --n0x1 1 --c0x1 2 --p0x1 0.1 --s1 1 --n1 2 --n1x0 1 --c1x0 6 --p1x0 0.97 --l1x0 1 --n1x1 1 --c1x1 1 --p1x1 0.27 --s2 0 --rwm2 9 --n2 2 --n2x0 0 --c2x0 4 --p2x0 2 --w2x0 16.3 --n2x1 1 --c2x1 2 --p2x1 0.71 --s3 3 --rep3 2.49 --n3 1 --n3x0 2 --c3x0 4 --p3x0 3 --w3x0 5.45" real-robot="false" velocity="30"/>
+    <params fsm-config="--nstates 2 --s0 0 --rwm0 48 --n0 4 --n0x0 0 --c0x0 3 --p0x0 2 --w0x0 12.86 --n0x1 0 --c0x1 0 --p0x1 0.21 --n0x2 0 --c0x2 4 --p0x2 2 --w0x2 3.48 --n0x3 0 --c0x3 5 --p0x3 0.34 --s1 0 --rwm1 66 --n1 1 --n1x0 0 --c1x0 4 --p1x0 8 --w1x0 10.69" real-robot="true" velocity="30"/>
   </automode_controller>
   </controllers>
 
@@ -48,7 +47,7 @@
   <floor id="floor" source="loop_functions" pixels_per_meter="300"/>
 
   <!-- Change the light here -->
-  <light id="light" position="0,-4.25,0.75" orientation="0,0,0" color="yellow" intensity="5.0" medium="leds"/>
+  <light id="light" position="0,-4.25,0.75" orientation="0,0,0" color="yellow" intensity="0.0" medium="leds"/>
 
   <!--Dodecagonal arena with side of length .66-->
   <box id="wall_1" size="0.01,.66,0.08" movable="false">
@@ -111,7 +110,7 @@
   <rvr id="rvr_05_55">
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
-  </rvr>-->
+  </rvr> -->
   </arena>
 
   <!-- ******************* -->
@@ -132,12 +131,13 @@
   <!-- * Visualization * -->
   <!-- ***************** -->
   <visualization>
-      <qt-opengl>
+	<!-- <qt-opengl>
       <camera>
           <placement idx="0" position="3,0,2" look_at="1,0,0" />
           <placement idx="1" position="0,0,3" look_at="0,0,0" />
       </camera>
-    </qt-opengl>
+    </qt-opengl> -->
   </visualization>
 
 </argos-configuration>
+
