@@ -11,9 +11,9 @@
   <!-- ****************** -->
   <!-- * Loop functions * -->
   <!-- ****************** -->
-  <loop_functions library="/home/raptus/rvr-loop-functions/build/loop-functions/rvr-pow/grid-exploration/librvr_pow_grid_exploration_loopfunc.so"
+  <loop_functions library="/home/dgarzon/develop/rvr/rvr-loop-functions/build/loop-functions/rvr-pow/grid-exploration/librvr_pow_grid_exploration_loopfunc.so"
    label="grid_exploration_loop_functions">
-    <params dist_radius="1.2" number_robots="5"/>
+    <params dist_radius="1.2" number_robots="3"/>
   </loop_functions>
 
   <!-- *************** -->
@@ -22,20 +22,19 @@
   <controllers>
     <!-- TRANSMITTER -->
     <automode_controller id="automode"
-                        library="/home/raptus/ARGoS3-AutoMoDe/build/src/libautomode.so">
+                        library="/home/dgarzon/develop/rvr/ARGoS3-AutoMoDe-rvr/build/src/libautomode.so">
       <actuators>
         <rvr_wheels implementation="default"/>
         <rvr_rgb_leds implementation="default" medium="leds"/>
       </actuators>
       <sensors>
-        <rvr_proximity implementation="default" range="0.3" show_rays="false"/>
-        <rvr_light implementation="default" show_rays="false"/>
+        <rvr_proximity implementation="default" range="0.4" show_rays="false"/>
+        <rvr_light implementation="default" show_rays="true"/>
         <rvr_lidar implementation="default" show_rays="false"/>
         <rvr_ground implementation="rot_z_only"/>
-	      <rvr_ground implementation="rot_z_only" />
-	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
+	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="true" />
       </sensors>
-    <params fsm-config="--nstates 1 --s0 0 --rwm0 5" real-robot="false"/>
+    <params fsm-config="--nstates 1 --s0 3 --att0 50.0 --rep0 50.0" real-robot="false" velocity="30"/>
   </automode_controller>
   </controllers>
 
@@ -48,11 +47,14 @@
   <floor id="floor" source="loop_functions" pixels_per_meter="300"/>
 
   <!-- Change the light here -->
-  <light id="light" position="0,-4.25,0.75" orientation="0,0,0" color="yellow" intensity="5.0" medium="leds"/>
+  <light id="light" position="0,-2.25,0.75" orientation="0,0,0" color="yellow" intensity="0" medium="leds"/>
 
   <!--Dodecagonal arena with side of length .66-->
   <box id="wall_1" size="0.01,.66,0.08" movable="false">
     <body position="-1.231,0,0" orientation="0,0,0"/>
+    <leds medium="leds">
+        <led offset="0.0,0,0.20" anchor="origin" color="yellow" />
+    </leds>
   </box>
   <box id="wall_2" size="0.01,.66,0.08" movable="false">
     <body position="1.231,0,0" orientation="0,0,0"/>
@@ -104,14 +106,14 @@
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
   </rvr>
-  <rvr id="rvr_04_51">
+  <!--rvr id="rvr_04_51">
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
   </rvr>
   <rvr id="rvr_05_55">
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
-  </rvr>
+  </rvr-->
   </arena>
 
   <!-- ******************* -->

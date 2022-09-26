@@ -11,7 +11,7 @@
   <!-- ****************** -->
   <!-- * Loop functions * -->
   <!-- ****************** -->
-  <loop_functions library="/home/raptus/rvr-loop-functions/build/loop-functions/rvr-pow/color-aggregation/librvr_pow_color_aggregation_loopfunc.so"
+  <loop_functions library="/home/dgarzon/develop/rvr/rvr-loop-functions/build/loop-functions/rvr-pow/color-aggregation/librvr_pow_color_aggregation_loopfunc.so"
    label="color_aggregation_loop_functions">
     <params dist_radius="1.2" number_robots="5"/>
   </loop_functions>
@@ -22,7 +22,7 @@
   <controllers>
     <!-- TRANSMITTER -->
     <automode_controller id="automode"
-                        library="/home/raptus/ARGoS3-AutoMoDe/build/src/libautomode.so">
+                        library="/home/dgarzon/develop/rvr/ARGoS3-AutoMoDe-rvr/build/src/libautomode.so">
       <actuators>
         <rvr_wheels implementation="default"/>
         <rvr_rgb_leds implementation="default" medium="leds"/>
@@ -38,7 +38,7 @@
   </automode_controller>
   </controllers>
 
-  <!-- ********* -->
+  <!-- ********* -->5
   <!-- * Arena * -->
   <!-- ********* -->
   <arena size="10, 10, 2" center="0,0,0">

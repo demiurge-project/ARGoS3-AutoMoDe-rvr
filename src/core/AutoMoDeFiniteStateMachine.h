@@ -24,6 +24,8 @@
 #include "../modules/AutoMoDeBehaviourExploration.h"
 #include "../modules/AutoMoDeBehaviourRepulsion.h"
 #include "../modules/AutoMoDeBehaviourStop.h"
+#include "../modules/AutoMoDeBehaviourPhototaxis.h"
+#include "../modules/AutoMoDeBehaviourAntiPhototaxis.h"
 #include "../modules/AutoMoDeCondition.h"
 #include "../modules/AutoMoDeConditionBlackFloor.h"
 #include "../modules/AutoMoDeConditionGrayFloor.h"

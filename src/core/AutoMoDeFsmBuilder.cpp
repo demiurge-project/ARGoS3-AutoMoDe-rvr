@@ -95,6 +95,7 @@ namespace argos
 		// Creation of the Behaviour object
 		switch (unBehaviourIdentifier)
 		{
+		// Changed numeration w.r.t. original implementation of Watermellon to be consistent with Chocolate
 		case 0:
 			cNewBehaviour = new AutoMoDeBehaviourExploration();
 			break;
@@ -102,11 +103,18 @@ namespace argos
 			cNewBehaviour = new AutoMoDeBehaviourStop();
 			break;
 		case 2:
-			cNewBehaviour = new AutoMoDeBehaviourAttraction();
+			cNewBehaviour = new AutoMoDeBehaviourPhototaxis();
 			break;
 		case 3:
+			cNewBehaviour = new AutoMoDeBehaviourAntiPhototaxis();
+			break;
+		case 4:
+			cNewBehaviour = new AutoMoDeBehaviourAttraction();
+			break;
+		case 5:
 			cNewBehaviour = new AutoMoDeBehaviourRepulsion();
 			break;
+		
 		}
 		cNewBehaviour->SetIndex(unBehaviourIndex);
 		cNewBehaviour->SetIdentifier(unBehaviourIdentifier);
