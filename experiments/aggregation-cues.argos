@@ -11,8 +11,8 @@
   <!-- ****************** -->
   <!-- * Loop functions * -->
   <!-- ****************** -->
-  <loop_functions library="/home/dgarzon/develop/rvr/rvr-loop-functions/build/loop-functions/rvr-pow/grid-exploration/librvr_pow_grid_exploration_loopfunc.so"
-   label="grid_exploration_loop_functions">
+  <loop_functions library="/home/dgarzon/develop/rvr/rvr-loop-functions/build/loop-functions/chocolate/AAC/libchocolate_aac_loopfunc.so"
+   label="chocolate_aac_loop_functions">
     <params dist_radius="1.2" number_robots="3"/>
   </loop_functions>
 
@@ -29,12 +29,12 @@
       </actuators>
       <sensors>
         <rvr_proximity implementation="default" range="0.4" show_rays="false"/>
-        <rvr_light implementation="default" show_rays="true"/>
+        <rvr_light implementation="default" show_rays="false"/>
         <rvr_lidar implementation="default" show_rays="false"/>
         <rvr_ground implementation="rot_z_only"/>
-	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="true" />
+	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
       </sensors>
-    <params fsm-config="--nstates 1 --s0 3 --att0 50.0 --rep0 50.0" real-robot="false" velocity="30"/>
+    <params fsm-config="--nstates 2 --s0 0 --rwm0 20 --n0 1 --n0x0 0 --c0x0 0 --p0x0 0.5 --s1 1" real-robot="false" velocity="30"/>
   </automode_controller>
   </controllers>
 
@@ -47,7 +47,7 @@
   <floor id="floor" source="loop_functions" pixels_per_meter="300"/>
 
   <!-- Change the light here -->
-  <light id="light" position="0,-2.25,0.75" orientation="0,0,0" color="yellow" intensity="0" medium="leds"/>
+  <light id="light" position="0,-4.25,0.75" orientation="0,0,0" color="yellow" intensity="0.0" medium="light"/>
 
   <!--Dodecagonal arena with side of length .66-->
   <box id="wall_1" size="0.01,.66,0.08" movable="false">
@@ -61,6 +61,9 @@
   </box>
   <box id="wall_4" size="0.01,.66,0.08" movable="false">
     <body position="0,-1.231,0" orientation="90,0,0"/>
+    <leds medium="leds">
+        <led offset="-0.10,0,0.20" anchor="origin" color="yellow" />
+    </leds>
   </box>
   <box id="wall_5" size="0.01,.66,0.08" movable="false">
     <body position="-.615,-1.066,0" orientation="60,0,0"/>
@@ -103,14 +106,14 @@
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
   </rvr>
-  <!--rvr id="rvr_04_51">
+  <!--<rvr id="rvr_04_51">
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
   </rvr>
   <rvr id="rvr_05_55">
     <body orientation="0,0,0" position="0.4,-0.6,0" />
     <controller config="automode" />
-  </rvr-->
+  </rvr>-->
   </arena>
 
   <!-- ******************* -->
@@ -125,13 +128,14 @@
   <!-- ********* -->
   <media>
     <led id="leds"/>
+    <led id="light"/>
   </media>
 
   <!-- ***************** -->
   <!-- * Visualization * -->
   <!-- ***************** -->
   <visualization>
-    <qt-opengl>
+      <qt-opengl>
       <camera>
           <placement idx="0" position="3,0,2" look_at="1,0,0" />
           <placement idx="1" position="0,0,3" look_at="0,0,0" />
