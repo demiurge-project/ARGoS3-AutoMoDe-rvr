@@ -64,10 +64,11 @@ namespace argos
 		}
 
 		sProxVector = CVector2(m_pcRobotDAO->GetProximityReading().Value, m_pcRobotDAO->GetProximityReading().Angle);
+		// Why are we multipliying the repulsion parameter to the readings of the vector?
 		sResultVector = -m_unRepulsionParameter * sRabVector - 5 * sProxVector;
-		std::cout << "Attraction vector " << sRabVector.Length() << " " << sRabVector.Angle() << std::endl;
-		std::cout << "Prox vector " << sProxVector.Length() << " " << sProxVector.Angle() << std::endl;
-		std::cout << "Result vector " << sResultVector.Length() << " " << sResultVector.Angle() << std::endl;
+		//std::cout << "Attraction vector " << sRabVector.Length() << " " << sRabVector.Angle() << std::endl;
+		//std::cout << "Prox vector " << sProxVector.Length() << " " << sProxVector.Angle() << std::endl;
+		//std::cout << "Result vector " << sResultVector.Length() << " " << sResultVector.Angle() << std::endl;
 		if (sResultVector.Length() < 0.1)
 		{
 			sResultVector = CVector2(1, CRadians::ZERO);

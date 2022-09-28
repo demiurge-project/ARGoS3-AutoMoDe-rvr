@@ -64,7 +64,8 @@ namespace argos
 		}
 
 		sProxVector = CVector2(m_pcRobotDAO->GetProximityReading().Value, m_pcRobotDAO->GetProximityReading().Angle);
-		sResultVector = 1.2 * sRabVector - 5 * sProxVector;
+		// Why are not we multipliying the repulsion parameter to the readings of the vector?
+		sResultVector = sRabVector - 6 * sProxVector;
 
 		if (sResultVector.Length() < 0.1)
 		{

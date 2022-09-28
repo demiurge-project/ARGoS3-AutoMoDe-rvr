@@ -5,13 +5,13 @@
   <!-- ************* -->
   <framework>
     <experiment length="120"
-                ticks_per_second="10" random_seed="10"/>
+                ticks_per_second="10" random_seed="0"/>
   </framework>
 
   <!-- ****************** -->
   <!-- * Loop functions * -->
   <!-- ****************** -->
-  <loop_functions library="/home/raptus/rvr-loop-functions/build/loop-functions/rvr-pow/aggregation/librvr_pow_aggregation_loopfunc.so"
+  <loop_functions library="/home/dgarzon/develop/rvr/rvr-loop-functions/build/loop-functions/rvr-pow/aggregation/librvr_pow_aggregation_loopfunc.so"
    label="aggregation_one_spot_loop_functions">
     <params dist_radius="1.2" number_robots="5"/>
   </loop_functions>
@@ -22,7 +22,7 @@
   <controllers>
     <!-- TRANSMITTER -->
     <automode_controller id="automode"
-                        library="/home/raptus/ARGoS3-AutoMoDe/devel/lib/libautomode.so">
+                        library="/home/dgarzon/develop/rvr/ARGoS3-AutoMoDe-rvr/build/src/libautomode.so">
       <actuators>
         <rvr_wheels implementation="default"/>
         <rvr_rgb_leds implementation="default" medium="leds"/>
@@ -34,7 +34,7 @@
         <rvr_ground implementation="rot_z_only"/>
 	      <colored_blob_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
       </sensors>
-    <params fsm-config="--nstates 1 --s0 0 --rwm0 55" real-robot="false" velocity="30"/>
+    <params fsm-config="--nstates 2 --s0 0 --rwm0 20 --n0 1 --n0x0 0 --c0x0 0 --p0x0 0.5 --s1 1" real-robot="false" velocity="30"/>
   </automode_controller>
   </controllers>
 

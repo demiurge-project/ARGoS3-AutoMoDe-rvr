@@ -102,9 +102,15 @@ namespace argos
 			cNewBehaviour = new AutoMoDeBehaviourStop();
 			break;
 		case 2:
-			cNewBehaviour = new AutoMoDeBehaviourAttraction();
+			cNewBehaviour = new AutoMoDeBehaviourPhototaxis();
 			break;
 		case 3:
+			cNewBehaviour = new AutoMoDeBehaviourAntiPhototaxis();
+			break;
+		case 4:
+			cNewBehaviour = new AutoMoDeBehaviourAttraction();
+			break;
+		case 5:
 			cNewBehaviour = new AutoMoDeBehaviourRepulsion();
 			break;
 		}
