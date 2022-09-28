@@ -63,6 +63,7 @@ namespace argos
 			sRabVector = CVector2(cLidarReading.Value, cLidarReading.Angle);
 		}
 
+		// Why are we multipliying the repulsion parameter to the readings of the vector?
 		sProxVector = CVector2(m_pcRobotDAO->GetProximityReading().Value, m_pcRobotDAO->GetProximityReading().Angle);
 		sResultVector = -m_unRepulsionParameter * sRabVector - 5 * sProxVector;
 
