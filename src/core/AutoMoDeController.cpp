@@ -61,7 +61,7 @@ namespace argos
 			THROW_ARGOSEXCEPTION_NESTED("Error parsing <params>", ex);
 		}
 		m_pcRobotState->SetMaxVelocity(ptVelocity);
-		m_unRobotID = atoi(GetId().substr(5, 6).c_str());
+		m_unRobotID = atoi(GetId().substr(3, 6).c_str());
 		m_pcRobotState->SetRobotIdentifier(m_unRobotID);
 
 		/*
@@ -100,7 +100,7 @@ namespace argos
 			m_pcLightSensor = GetSensor<CCI_RVRLightSensor>("rvr_light");
 			m_pcGroundSensor = GetSensor<CCI_RVRGroundColorSensor>("rvr_ground");
 			m_pcLidarSensor = GetSensor<CCI_RVRLidarSensor>("rvr_lidar");
-			m_pcOmnidirectionalCameraSensor = GetSensor<CCI_ColoredBlobOmnidirectionalCameraSensor>("colored_blob_omnidirectional_camera");
+			m_pcOmnidirectionalCameraSensor = GetSensor<CCI_RVRColoredBlobOmnidirectionalCameraSensor>("colored_blob_omnidirectional_camera");
 			m_pcOmnidirectionalCameraSensor->Enable();
 		}
 		catch (CARGoSException ex)
@@ -156,7 +156,7 @@ namespace argos
 			}
 			if (m_pcOmnidirectionalCameraSensor != NULL)
 			{
-				const CCI_ColoredBlobOmnidirectionalCameraSensor::SReadings &readings = m_pcOmnidirectionalCameraSensor->GetReadings();
+				const CCI_RVRColoredBlobOmnidirectionalCameraSensor::SReadings &readings = m_pcOmnidirectionalCameraSensor->GetReadings();
 				m_pcRobotState->SetOmnidirectionalCameraInput(readings);
 			}
 		}
