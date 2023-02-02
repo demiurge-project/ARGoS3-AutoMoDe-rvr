@@ -61,7 +61,7 @@ namespace argos
 			THROW_ARGOSEXCEPTION_NESTED("Error parsing <params>", ex);
 		}
 		m_pcRobotState->SetMaxVelocity(ptVelocity);
-		m_unRobotID = atoi(GetId().substr(5, 6).c_str());
+		m_unRobotID = atoi(GetId().substr(3, 6).c_str());
 		m_pcRobotState->SetRobotIdentifier(m_unRobotID);
 
 		/*
