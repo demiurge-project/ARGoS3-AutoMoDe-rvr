@@ -100,7 +100,7 @@ namespace argos
 			m_pcLightSensor = GetSensor<CCI_RVRLightSensor>("rvr_light");
 			m_pcGroundSensor = GetSensor<CCI_RVRGroundColorSensor>("rvr_ground");
 			m_pcLidarSensor = GetSensor<CCI_RVRLidarSensor>("rvr_lidar");
-			m_pcOmnidirectionalCameraSensor = GetSensor<CCI_RVRColoredBlobOmnidirectionalCameraSensor>("colored_blob_omnidirectional_camera");
+			m_pcOmnidirectionalCameraSensor = GetSensor<CCI_RVRColoredBlobOmnidirectionalCameraSensor>("rvr_colored_blob_omnidirectional_camera");
 			m_pcOmnidirectionalCameraSensor->Enable();
 		}
 		catch (CARGoSException ex)
