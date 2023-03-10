@@ -60,8 +60,9 @@ namespace argos
 		{
 			THROW_ARGOSEXCEPTION_NESTED("Error parsing <params>", ex);
 		}
-		m_pcRobotState->SetMaxVelocity(ptVelocity);
+		
 		m_unRobotID = atoi(GetId().substr(3, 6).c_str());
+		m_pcRobotState->SetMaxVelocity(ptVelocity);	
 		m_pcRobotState->SetRobotIdentifier(m_unRobotID);
 
 		/*
@@ -90,10 +91,6 @@ namespace argos
 		/*
 		 *  Initializing sensors and actuators
 		 */
-		if (m_bRealRobot)
-		{
-			return;
-		}
 		try
 		{
 			m_pcProximitySensor = GetSensor<CCI_RVRProximitySensor>("rvr_proximity");
@@ -132,33 +129,31 @@ namespace argos
 		/*
 		 * 1. Update RobotDAO
 		 */
-		if (!m_bRealRobot)
+		
+		if (m_pcGroundSensor != NULL)
 		{
-			if (m_pcGroundSensor != NULL)
-			{
-				const CCI_RVRGroundColorSensor::SReading &reading = m_pcGroundSensor->GetReading();
-				m_pcRobotState->SetGroundInput(reading);
-			}
-			if (m_pcLightSensor != NULL)
-			{
-				const CCI_RVRLightSensor::SReading &reading = m_pcLightSensor->GetReading();
-				m_pcRobotState->SetLightInput(reading);
-			}
-			if (m_pcProximitySensor != NULL)
-			{
-				const CCI_RVRProximitySensor::TReadings &readings = m_pcProximitySensor->GetReadings();
-				m_pcRobotState->SetProximityInput(readings);
-			}
-			if (m_pcLidarSensor != NULL)
-			{
-				const CCI_RVRLidarSensor::TReadings &readings = m_pcLidarSensor->GetReadings();
-				m_pcRobotState->SetLidarInput(readings);
-			}
-			if (m_pcOmnidirectionalCameraSensor != NULL)
-			{
-				const CCI_RVRColoredBlobOmnidirectionalCameraSensor::SReadings &readings = m_pcOmnidirectionalCameraSensor->GetReadings();
-				m_pcRobotState->SetOmnidirectionalCameraInput(readings);
-			}
+			const CCI_RVRGroundColorSensor::SReading &reading = m_pcGroundSensor->GetReading();
+			m_pcRobotState->SetGroundInput(reading);
+		}
+		if (m_pcLightSensor != NULL)
+		{
+			const CCI_RVRLightSensor::SReading &reading = m_pcLightSensor->GetReading();
+			m_pcRobotState->SetLightInput(reading);
+		}
+		if (m_pcProximitySensor != NULL)
+		{
+			const CCI_RVRProximitySensor::TReadings &readings = m_pcProximitySensor->GetReadings();
+			m_pcRobotState->SetProximityInput(readings);
+		}
+		if (m_pcLidarSensor != NULL)
+		{
+			const CCI_RVRLidarSensor::TReadings &readings = m_pcLidarSensor->GetReadings();
+			m_pcRobotState->SetLidarInput(readings);
+		}
+		if (m_pcOmnidirectionalCameraSensor != NULL)
+		{
+			const CCI_RVRColoredBlobOmnidirectionalCameraSensor::SReadings &readings = m_pcOmnidirectionalCameraSensor->GetReadings();
+			m_pcRobotState->SetOmnidirectionalCameraInput(readings);
 		}
 
 		/*
@@ -169,17 +164,10 @@ namespace argos
 		/*
 		 * 3. Update Actuators
 		 */
-		if (m_bRealRobot)
+		
+		if (m_pcWheelsActuator != NULL)
 		{
-			// make sure we publish at each time step in case ROS is used
-			m_pcRobotState->SetWheelsVelocity(m_pcRobotState->GetLeftWheelVelocity(), m_pcRobotState->GetRightWheelVelocity());
-		}
-		else
-		{
-			if (m_pcWheelsActuator != NULL)
-			{
-				m_pcWheelsActuator->SetLinearVelocity(m_pcRobotState->GetLeftWheelVelocity(), m_pcRobotState->GetRightWheelVelocity());
-			}
+			m_pcWheelsActuator->SetLinearVelocity(m_pcRobotState->GetLeftWheelVelocity(), m_pcRobotState->GetRightWheelVelocity());
 		}
 
 		m_unTimeStep++;
