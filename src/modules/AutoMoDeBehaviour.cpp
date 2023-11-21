@@ -10,65 +10,56 @@
 
 #include "AutoMoDeBehaviour.h"
 
-namespace argos
-{
+
+namespace argos {
 
 	AutoMoDeBehaviour::~AutoMoDeBehaviour() {}
 
 	/****************************************/
 	/****************************************/
 
-	const bool AutoMoDeBehaviour::IsLocked() const
-	{
+	const bool AutoMoDeBehaviour::IsLocked() const {
 		return m_bLocked;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviour::SetIndex(const UInt32 &un_index)
-	{
+	void AutoMoDeBehaviour::SetIndex(const UInt32& un_index) {
 		m_unIndex = un_index;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	const UInt32 &AutoMoDeBehaviour::GetIndex() const
-	{
+	const UInt32& AutoMoDeBehaviour::GetIndex() const {
 		return m_unIndex;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviour::SetIdentifier(const UInt32 &un_id)
-	{
+	void AutoMoDeBehaviour::SetIdentifier(const UInt32& un_id) {
 		m_unIdentifier = un_id;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	const UInt32 &AutoMoDeBehaviour::GetIdentifier() const
-	{
+	const UInt32& AutoMoDeBehaviour::GetIdentifier() const {
 		return m_unIdentifier;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	const std::string AutoMoDeBehaviour::GetDOTDescription()
-	{
+	const std::string AutoMoDeBehaviour::GetDOTDescription() {
 		std::stringstream ss;
 		ss << m_strLabel;
-		if (!m_mapParameters.empty())
-		{
+		if (!m_mapParameters.empty()) {
 			std::map<std::string, Real>::iterator it;
-			for (it = m_mapParameters.begin(); it != m_mapParameters.end(); it++)
-			{
-				ss << "\\n"
-				   << it->first << "=" << it->second;
+			for (it = m_mapParameters.begin(); it != m_mapParameters.end(); it++) {
+				ss << "\\n" << it->first << "=" << it->second ;
 			}
 		}
 		return ss.str();
@@ -77,8 +68,7 @@ namespace argos
 	/****************************************/
 	/****************************************/
 
-	CVector2 AutoMoDeBehaviour::ComputeWheelsVelocityFromVector(CVector2 c_vector_to_follow)
-	{
+	CVector2 AutoMoDeBehaviour::ComputeWheelsVelocityFromVector(CVector2 c_vector_to_follow) {
 		Real fLeftVelocity = 0;
 		Real fRightVelocity = 0;
 		CRange<CRadians> cLeftHemisphere(CRadians::ZERO, CRadians::PI);
@@ -118,11 +108,9 @@ namespace argos
 	/****************************************/
 	/****************************************/
 
-	CVector2 AutoMoDeBehaviour::SumProximityReadings(CCI_RVRProximitySensor::TReadings s_prox)
-	{
+	CVector2 AutoMoDeBehaviour::SumProximityReadings(CCI_RVRProximitySensor::TReadings s_prox) {
 		CVector2 cSum(0, 0);
-		for (UInt8 i = 0; i < s_prox.size(); i++)
-		{
+		for (UInt8 i = 0; i < s_prox.size(); i++) {
 			cSum += CVector2(s_prox[i].Value, s_prox[i].Angle);
 		}
 		return cSum;
@@ -131,41 +119,68 @@ namespace argos
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviour::AddParameter(const std::string &str_identifier, const Real &f_value)
-	{
+	void AutoMoDeBehaviour::AddParameter(const std::string& str_identifier, const Real& f_value) {
 		m_mapParameters.insert(std::pair<std::string, Real>(str_identifier, f_value));
 	}
 
 	/****************************************/
 	/****************************************/
 
-	const bool AutoMoDeBehaviour::IsOperational() const
-	{
+	const bool AutoMoDeBehaviour::IsOperational() const {
 		return m_bOperational;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	const std::string &AutoMoDeBehaviour::GetLabel() const
-	{
+	const std::string& AutoMoDeBehaviour::GetLabel() const {
 		return m_strLabel;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	const std::map<std::string, Real> AutoMoDeBehaviour::GetParameters()
-	{
+	const std::map<std::string, Real> AutoMoDeBehaviour::GetParameters() {
 		return m_mapParameters;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviour::SetRobotDAO(RVRDAO *pc_robot_dao)
-	{
+	void AutoMoDeBehaviour::SetRobotDAO(RVRDAO* pc_robot_dao) {
 		m_pcRobotDAO = pc_robot_dao;
+	}
+
+	/****************************************/
+	/****************************************/
+
+	bool AutoMoDeBehaviour::ObstacleInFront() {
+		CRadians cAngle = m_pcRobotDAO->GetProximityReading().Angle;
+		if ((m_pcRobotDAO->GetProximityReading().Value >= 0.1) && ((cAngle <= CRadians::PI_OVER_TWO) && (cAngle >= -CRadians::PI_OVER_TWO))) {
+			return true;
+		}
+		return false;
+	}
+
+	/****************************************/
+	/****************************************/
+
+	bool AutoMoDeBehaviour::LightPerceived() {
+		return true;
+	}
+
+	/****************************************/
+	/****************************************/
+
+	bool AutoMoDeBehaviour::EvaluateBernoulliProbability(const Real& f_probability) const {
+		return m_pcRobotDAO->GetRandomNumberGenerator()->Bernoulli(f_probability);
+	}
+
+	/****************************************/
+	/****************************************/
+
+	Real AutoMoDeBehaviour::GetSuccessProbability() const {
+		return m_fSuccessProbabilityParameter;
 	}
 
 }

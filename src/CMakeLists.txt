@@ -1,5 +1,5 @@
 if(ARGOS_BUILD_FOR_SIMULATOR)
 	include(SimLibrary.cmake)
-elseif(ARGOS_BUILD_FOR_RVR)
+elseif(ARGOS_BUILD_FOR_EPUCK)
 	include(RealLibrary.cmake)
 endif(ARGOS_BUILD_FOR_SIMULATOR)

@@ -27,6 +27,9 @@ namespace argos {
 
 			virtual AutoMoDeBehaviourAttraction* Clone();
 
+			virtual bool Succeeded();
+			virtual bool Failed();
+
 		private:
 			UInt8 m_unAttractionParameter;
 	};

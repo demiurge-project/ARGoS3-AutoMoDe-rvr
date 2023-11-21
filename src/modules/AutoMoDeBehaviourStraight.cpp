@@ -1,5 +1,5 @@
 /**
-  * @file <src/modules/AutoMoDeBehaviourStop.cpp>
+  * @file <src/modules/AutoMoDeBehaviourStraight.cpp>
   *
   * @author Antoine Ligot - <aligot@ulb.ac.be>
   *
@@ -8,7 +8,7 @@
   * @license MIT License
   */
 
-#include "AutoMoDeBehaviourStop.h"
+#include "AutoMoDeBehaviourStraight.h"
 
 
 namespace argos {
@@ -16,14 +16,14 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeBehaviourStop::AutoMoDeBehaviourStop() {
-		m_strLabel = "Stop";
+	AutoMoDeBehaviourStraight::AutoMoDeBehaviourStraight() {
+		m_strLabel = "Straight";
 	}
 
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeBehaviourStop::AutoMoDeBehaviourStop(AutoMoDeBehaviourStop* pc_behaviour) {
+	AutoMoDeBehaviourStraight::AutoMoDeBehaviourStraight(AutoMoDeBehaviourStraight* pc_behaviour) {
 		m_strLabel = pc_behaviour->GetLabel();
 		m_bLocked = pc_behaviour->IsLocked();
 		m_bOperational = pc_behaviour->IsOperational();
@@ -36,27 +36,27 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeBehaviourStop::~AutoMoDeBehaviourStop() {}
+	AutoMoDeBehaviourStraight::~AutoMoDeBehaviourStraight() {}
 
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeBehaviourStop* AutoMoDeBehaviourStop::Clone() {
-		return new AutoMoDeBehaviourStop(this);
+	AutoMoDeBehaviourStraight* AutoMoDeBehaviourStraight::Clone() {
+		return new AutoMoDeBehaviourStraight(this);
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviourStop::ControlStep() {
-		m_pcRobotDAO->SetWheelsVelocity(0,0);
+	void AutoMoDeBehaviourStraight::ControlStep() {
+		m_pcRobotDAO->SetWheelsVelocity(m_pcRobotDAO->GetMaxVelocity(), m_pcRobotDAO->GetMaxVelocity());
 		m_bLocked = false;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviourStop::Init() {
+	void AutoMoDeBehaviourStraight::Init() {
 		// Success probability
 		std::map<std::string, Real>::iterator it = m_mapParameters.find("p");
 		if (it != m_mapParameters.end()) {
@@ -70,7 +70,7 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviourStop::Reset() {
+	void AutoMoDeBehaviourStraight::Reset() {
 		m_bOperational = false;
 		ResumeStep();
 	}
@@ -78,21 +78,21 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviourStop::ResumeStep() {
+	void AutoMoDeBehaviourStraight::ResumeStep() {
 		m_bOperational = true;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	bool AutoMoDeBehaviourStop::Succeeded() {
+	bool AutoMoDeBehaviourStraight::Succeeded() {
 		return EvaluateBernoulliProbability(m_fSuccessProbabilityParameter);
 	}
 
 	/****************************************/
 	/****************************************/
 
-	bool AutoMoDeBehaviourStop::Failed() {
-		return false;
+	bool AutoMoDeBehaviourStraight::Failed() {
+		return ObstacleInFront();
 	}
 }

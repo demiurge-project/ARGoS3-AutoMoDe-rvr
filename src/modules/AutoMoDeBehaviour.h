@@ -21,153 +21,184 @@
 
 #include <map>
 
-namespace argos
-{
-	class AutoMoDeBehaviour
-	{
-	protected:
-		/*
-		 * Tells whether or not the behaviour is locked for a given
-		 * number of steps. No conditions should be tested if it is locked.
-		 */
-		bool m_bLocked;
+namespace argos {
+	class AutoMoDeBehaviour {
+		protected:
+			/*
+			 * Tells whether or not the behaviour is locked for a given
+			 * number of steps. No conditions should be tested if it is locked.
+			 */
+			bool m_bLocked;
 
-		/*
-		 * Tells whether or not the behaviour is ready to be executed.
-		 * This could happen if a previous reseting step takes more than
-		 * one time step.
-		 */
-		bool m_bOperational;
+			/*
+			 * Tells whether or not the behaviour is ready to be executed.
+			 * This could happen if a previous reseting step takes more than
+			 * one time step.
+			 */
+			bool m_bOperational;
 
-		/*
-		 * Contains the parameters of the behaviours.
-		 */
-		std::map<std::string, Real> m_mapParameters;
+			/*
+			 * Contains the parameters of the behaviours.
+			 */
+			std::map<std::string, Real> m_mapParameters;
 
-		/*
-		 * The name of the behaviour.
-		 */
-		std::string m_strLabel;
+			/*
+			 * The name of the behaviour.
+			 */
+			std::string m_strLabel;
 
-		/*
-		 * The index of the behaviour in the FSM behaviour list.
-		 */
-		UInt32 m_unIndex;
+			/*
+			 * The index of the behaviour in the FSM behaviour list.
+			 */
+			UInt32 m_unIndex;
 
-		/*
-		 * The identifier of the behaviour.
-		 */
-		UInt32 m_unIdentifier;
+			/*
+			 * The identifier of the behaviour.
+			 */
+			UInt32 m_unIdentifier;
 
-		/*
-		 * Pointer to the state of the robot. Shared with the controller AutoMoDeController
-		 * and the finite state machine AutoMoDeFiniteStateMachine.
-		 */
-		RVRDAO *m_pcRobotDAO;
+			/*
+			 * Pointer to the state of the robot. Shared with the controller AutoMoDeController
+			 * and the finite state machine AutoMoDeFiniteStateMachine.
+			 */
+      RVRDAO* m_pcRobotDAO;
 
-	public:
-		virtual ~AutoMoDeBehaviour();
-		/*
-		 * Execution of the behaviour. Based on the state of the robot,
-		 * the behaviour should update the output variables.
-		 */
-		virtual void ControlStep() = 0;
+			Real m_fSuccessProbabilityParameter;
 
-		/*
-		 * Method used to reset the status (variables) of the behaviour.
-		 */
-		virtual void Reset() = 0;
+		public:
 
-		/*
-		 * Method called at the reseting of the behaviour when more than one
-		 * time step are needed to prepare before the execution of the behaviour
-		 * (that is the call of ControlStep).
-		 */
-		virtual void ResumeStep() = 0;
+		 virtual ~AutoMoDeBehaviour();
+			/*
+			 * Execution of the behaviour. Based on the state of the robot,
+			 * the behaviour should update the output variables.
+			 */
+			virtual void ControlStep() = 0;
 
-		/*
-		 * Initialize the behaviour.
-		 */
-		virtual void Init() = 0;
+			/*
+			 * Method used to reset the status (variables) of the behaviour.
+			 */
+			virtual void Reset() = 0;
 
-		/*
-		 * Cloning function.
-		 */
-		virtual AutoMoDeBehaviour *Clone() = 0;
+			/*
+			 * Method called at the reseting of the behaviour when more than one
+			 * time step are needed to prepare before the execution of the behaviour
+			 * (that is the call of ControlStep).
+			 */
+			virtual void ResumeStep() = 0;
 
-		/*
-		 * Returns a string containing the DOT description of the behaviour.
-		 */
-		const std::string GetDOTDescription();
+			/*
+			 * Initialize the behaviour.
+			 */
+			virtual void Init() = 0;
 
-		/*
-		 * Instert a pair <parameter, value> to the parameters map.
-		 */
-		void AddParameter(const std::string &str_identifier, const Real &f_value);
+			/*
+			 * Cloning function.
+			 */
+			virtual AutoMoDeBehaviour* Clone() = 0;
 
-		/*
-		 * Returns the value of a given parameter from the parameters map.
-		 */
-		const Real &GetParameter(const std::string &str_identifier);
+			/*
+			 * Returns a string containing the DOT description of the behaviour.
+			 */
+			const std::string GetDOTDescription();
 
-		/*
-		 * Returns the whole parameters map.
-		 */
-		const std::map<std::string, Real> GetParameters();
+			/*
+			 * Instert a pair <parameter, value> to the parameters map.
+			 */
+			void AddParameter(const std::string& str_identifier, const Real& f_value);
 
-		/*
-		 * Setter for the index of the behaviour.
-		 */
-		void SetIndex(const UInt32 &un_index);
+			/*
+			 * Returns the value of a given parameter from the parameters map.
+			 */
+			const Real& GetParameter(const std::string& str_identifier);
 
-		/*
-		 * Getter for the index of the behaviour.
-		 */
-		const UInt32 &GetIndex() const;
+			/*
+			 * Returns the whole parameters map.
+			 */
+			const std::map<std::string, Real> GetParameters();
 
-		/*
-		 * Setter for the identifier of the behaviour.
-		 */
-		void SetIdentifier(const UInt32 &un_id);
+			/*
+			 * Setter for the index of the behaviour.
+			 */
+			void SetIndex(const UInt32& un_index);
 
-		/*
-		 * Getter for the identifier of the behaviour.
-		 */
-		const UInt32 &GetIdentifier() const;
+			/*
+			 * Getter for the index of the behaviour.
+			 */
+			const UInt32& GetIndex() const;
 
-		/*
-		 * Getter for the label (name) of the behaviour.
-		 */
-		const std::string &GetLabel() const;
+			/*
+			 * Setter for the identifier of the behaviour.
+			 */
+			void SetIdentifier(const UInt32& un_id);
 
-		/*
-		 * Returns the value of the locked flag.
-		 * @see m_bLocked.
-		 */
-		const bool IsLocked() const;
+			/*
+			 * Getter for the identifier of the behaviour.
+			 */
+			const UInt32& GetIdentifier() const;
 
-		/*
-		 * Returns the value of the operational flag.
-		 * @see m_bOperational;
-		 */
-		const bool IsOperational() const;
+			/*
+			 * Getter for the label (name) of the behaviour.
+			 */
+			const std::string& GetLabel() const;
 
-		/*
-		 * Utility function. Returns a vector containing the wheels velocity
-		 * needed for the robot to follow the vector passed as parameter of the method.
-		 */
-		CVector2 ComputeWheelsVelocityFromVector(CVector2 c_vector_to_follow);
 
-		/*
-		 * Utility function. Returns a vector containing the sum of the
-		 * proximity readings passed as parameter of the method.
-		 */
-		CVector2 SumProximityReadings(CCI_RVRProximitySensor::TReadings s_prox);
+			/*
+			 * Returns the value of the locked flag.
+			 * @see m_bLocked.
+			 */
+			const bool IsLocked() const;
 
-		/*
-		 * Setter for the shared pointer to the representation of the robot state.
-		 */
-		void SetRobotDAO(RVRDAO *pc_robot_dao);
+			/*
+			 * Returns the value of the operational flag.
+			 * @see m_bOperational;
+			 */
+			const bool IsOperational() const;
+
+			/*
+			 * Utility function. Returns a vector containing the wheels velocity
+			 * needed for the robot to follow the vector passed as parameter of the method.
+			 */
+			CVector2 ComputeWheelsVelocityFromVector(CVector2 c_vector_to_follow);
+
+			/*
+			 * Utility function. Returns a vector containing the sum of the
+			 * proximity readings passed as parameter of the method.
+			 */
+			CVector2 SumProximityReadings(CCI_RVRProximitySensor::TReadings s_prox);
+
+			/*
+			 * Setter for the shared pointer to the representation of the robot state.
+			 */
+			void SetRobotDAO(RVRDAO* pc_robot_dao);
+
+
+			/*****************/
+			/* Behavior Tree */
+			/*****************/
+
+			/*
+			 * BT function: checks if behavior is in SUCCESS state.
+			 */
+			virtual bool Succeeded() = 0;
+
+			/*
+			 * BT function: checks if behavior is in FAILURE state.
+			 */
+			virtual bool Failed() = 0;
+
+			bool ObstacleInFront();
+
+			bool LightPerceived();
+
+			bool EvaluateBernoulliProbability(const Real& f_probability) const;
+
+			Real GetSuccessProbability() const;
+
+			/* Debug functions */
+
+		  UInt32 LogRobotIdientifier() {
+				return m_pcRobotDAO->GetRobotIdentifier();
+			};
 	};
 }
 

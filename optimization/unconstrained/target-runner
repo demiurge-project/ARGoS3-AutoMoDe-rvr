@@ -17,7 +17,7 @@
 # Path to the AutoMoDe software:
 # Note that this script is ran from the execution directory
 
-EXE=$(pwd)/../../../bin/automode_main
+EXE=$(pwd)/../../../bin/automode_main_bt
 
 CONFIG_ID="$1"
 INSTANCE_ID="$2"
@@ -47,19 +47,20 @@ start=`date +%s`
 
 # Now we can call AutoMoDe by building a command line with all parameters for it
 # and we collect its output that contains the score
-OUTPUT=$($EXE -n -c $INSTANCE --seed $SEED --fsm-config ${CONFIG_PARAMS})
+OUTPUT=$($EXE -n -c $INSTANCE --seed $SEED --bt-config ${CONFIG_PARAMS})
 
 #end=`date +%s`
 
 # Extract the score from the AutoMoDe (i.e. and ARGoS) output
 SCORE=$(echo ${OUTPUT} | grep -o -E 'Score [-+0-9.e]+' | cut -d ' ' -f2)
+#echo $SCORE
 if ! [[ "$SCORE" =~ ^[-+0-9.e]+$ ]] ; then
     error "Output is not a number"
 fi
 
 #TIME=$(echo "$end - $start" | bc -l)
 
-echo " score $SCORE" >> $FSM_LOG
+echo " scooore $SCORE" >> $FSM_LOG
 
 # Print score!
 echo "-$SCORE"

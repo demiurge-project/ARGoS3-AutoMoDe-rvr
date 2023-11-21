@@ -1,5 +1,5 @@
 /**
-  * @file <src/modules/AutoMoDeBehaviourStop.h>
+  * @file <src/modules/AutoMoDeBehaviourStraight.h>
   *
   * @author Antoine Ligot - <aligot@ulb.ac.be>
   *
@@ -9,24 +9,24 @@
   */
 
 
-#ifndef AUTOMODE_BEHAVIOUR_STOP_H
-#define AUTOMODE_BEHAVIOUR_STOP_H
+#ifndef AUTOMODE_BEHAVIOUR_STRAIGHT_H
+#define AUTOMODE_BEHAVIOUR_STRAIGHT_H
 
 #include "AutoMoDeBehaviour.h"
 
 namespace argos {
-	class AutoMoDeBehaviourStop: public AutoMoDeBehaviour {
+	class AutoMoDeBehaviourStraight: public AutoMoDeBehaviour {
 		public:
-			AutoMoDeBehaviourStop();
-			AutoMoDeBehaviourStop(AutoMoDeBehaviourStop* pc_behaviour);
-			virtual ~AutoMoDeBehaviourStop();
+			AutoMoDeBehaviourStraight();
+			AutoMoDeBehaviourStraight(AutoMoDeBehaviourStraight* pc_behaviour);
+			virtual ~AutoMoDeBehaviourStraight();
 
 			virtual void ControlStep();
 			virtual void Reset();
 			virtual void ResumeStep();
 			virtual void Init();
 
-			virtual AutoMoDeBehaviourStop* Clone();
+			virtual AutoMoDeBehaviourStraight* Clone();
 
 			virtual bool Succeeded();
 			virtual bool Failed();

@@ -1,0 +1,74 @@
+RootNode   "--rootnode "   c (0)
+NumChildsRoot   "--nchildsroot "   i (1,4)
+N0     "--n0 "  c   (0) | as.numeric(NumChildsRoot)>0 
+NumConds0   "--nc0 "  i (1,2) | as.numeric(N0)==0
+C0x0  "--c0x0 " c   (0,1,2,3,4,5) | as.numeric(NumConds0)>0 
+P0x0  "--p0x0 " r   (0,1) | as.numeric(C0x0) %in% c(0,1,2,5) 
+B0x0  "--p0x0 " i   (1,10) | as.numeric(C0x0)==3 
+W0x0  "--w0x0 " r   (0,20) | as.numeric(C0x0)==3 
+BI0x0  "--p0x0 " i   (1,10) | as.numeric(C0x0)==4 
+WI0x0  "--w0x0 " r   (0,20) | as.numeric(C0x0)==4 
+C0x1  "--c0x1 " c   (0,1,2,3,4,5) | as.numeric(NumConds0)>1 
+P0x1  "--p0x1 " r   (0,1) | as.numeric(C0x1) %in% c(0,1,2,5) 
+B0x1  "--p0x1 " i   (1,10) | as.numeric(C0x1)==3 
+W0x1  "--w0x1 " r   (0,20) | as.numeric(C0x1)==3 
+BI0x1  "--p0x1 " i   (1,10) | as.numeric(C0x1)==4 
+WI0x1  "--w0x1 " r   (0,20) | as.numeric(C0x1)==4 
+Action0     "--a0 "  c   (0,1,2,3,4,5) | as.numeric(N0)==0 
+RWM0   "--rwm0 "  i (1,100) | as.numeric(Action0)==0
+ATT0   "--att0 "  r (1,5) | as.numeric(Action0)==4
+REP0   "--rep0 "  r (1,5) | as.numeric(Action0)==5
+N1     "--n1 "  c   (0) | as.numeric(NumChildsRoot)>1 
+NumConds1   "--nc1 "  i (1,2) | as.numeric(N1)==0
+C1x0  "--c1x0 " c   (0,1,2,3,4,5) | as.numeric(NumConds1)>0 
+P1x0  "--p1x0 " r   (0,1) | as.numeric(C1x0) %in% c(0,1,2,5) 
+B1x0  "--p1x0 " i   (1,10) | as.numeric(C1x0)==3 
+W1x0  "--w1x0 " r   (0,20) | as.numeric(C1x0)==3 
+BI1x0  "--p1x0 " i   (1,10) | as.numeric(C1x0)==4 
+WI1x0  "--w1x0 " r   (0,20) | as.numeric(C1x0)==4 
+C1x1  "--c1x1 " c   (0,1,2,3,4,5) | as.numeric(NumConds1)>1 
+P1x1  "--p1x1 " r   (0,1) | as.numeric(C1x1) %in% c(0,1,2,5) 
+B1x1  "--p1x1 " i   (1,10) | as.numeric(C1x1)==3 
+W1x1  "--w1x1 " r   (0,20) | as.numeric(C1x1)==3 
+BI1x1  "--p1x1 " i   (1,10) | as.numeric(C1x1)==4 
+WI1x1  "--w1x1 " r   (0,20) | as.numeric(C1x1)==4 
+Action1     "--a1 "  c   (0,1,2,3,4,5) | as.numeric(N1)==0 
+RWM1   "--rwm1 "  i (1,100) | as.numeric(Action1)==0
+ATT1   "--att1 "  r (1,5) | as.numeric(Action1)==4
+REP1   "--rep1 "  r (1,5) | as.numeric(Action1)==5
+N2     "--n2 "  c   (0) | as.numeric(NumChildsRoot)>2 
+NumConds2   "--nc2 "  i (1,2) | as.numeric(N2)==0
+C2x0  "--c2x0 " c   (0,1,2,3,4,5) | as.numeric(NumConds2)>0 
+P2x0  "--p2x0 " r   (0,1) | as.numeric(C2x0) %in% c(0,1,2,5) 
+B2x0  "--p2x0 " i   (1,10) | as.numeric(C2x0)==3 
+W2x0  "--w2x0 " r   (0,20) | as.numeric(C2x0)==3 
+BI2x0  "--p2x0 " i   (1,10) | as.numeric(C2x0)==4 
+WI2x0  "--w2x0 " r   (0,20) | as.numeric(C2x0)==4 
+C2x1  "--c2x1 " c   (0,1,2,3,4,5) | as.numeric(NumConds2)>1 
+P2x1  "--p2x1 " r   (0,1) | as.numeric(C2x1) %in% c(0,1,2,5) 
+B2x1  "--p2x1 " i   (1,10) | as.numeric(C2x1)==3 
+W2x1  "--w2x1 " r   (0,20) | as.numeric(C2x1)==3 
+BI2x1  "--p2x1 " i   (1,10) | as.numeric(C2x1)==4 
+WI2x1  "--w2x1 " r   (0,20) | as.numeric(C2x1)==4 
+Action2     "--a2 "  c   (0,1,2,3,4,5) | as.numeric(N2)==0 
+RWM2   "--rwm2 "  i (1,100) | as.numeric(Action2)==0
+ATT2   "--att2 "  r (1,5) | as.numeric(Action2)==4
+REP2   "--rep2 "  r (1,5) | as.numeric(Action2)==5
+N3     "--n3 "  c   (0) | as.numeric(NumChildsRoot)>3 
+NumConds3   "--nc3 "  i (1,2) | as.numeric(N3)==0
+C3x0  "--c3x0 " c   (0,1,2,3,4,5) | as.numeric(NumConds3)>0 
+P3x0  "--p3x0 " r   (0,1) | as.numeric(C3x0) %in% c(0,1,2,5) 
+B3x0  "--p3x0 " i   (1,10) | as.numeric(C3x0)==3 
+W3x0  "--w3x0 " r   (0,20) | as.numeric(C3x0)==3 
+BI3x0  "--p3x0 " i   (1,10) | as.numeric(C3x0)==4 
+WI3x0  "--w3x0 " r   (0,20) | as.numeric(C3x0)==4 
+C3x1  "--c3x1 " c   (0,1,2,3,4,5) | as.numeric(NumConds3)>1 
+P3x1  "--p3x1 " r   (0,1) | as.numeric(C3x1) %in% c(0,1,2,5) 
+B3x1  "--p3x1 " i   (1,10) | as.numeric(C3x1)==3 
+W3x1  "--w3x1 " r   (0,20) | as.numeric(C3x1)==3 
+BI3x1  "--p3x1 " i   (1,10) | as.numeric(C3x1)==4 
+WI3x1  "--w3x1 " r   (0,20) | as.numeric(C3x1)==4 
+Action3     "--a3 "  c   (0,1,2,3,4,5) | as.numeric(N3)==0 
+RWM3   "--rwm3 "  i (1,100) | as.numeric(Action3)==0
+ATT3   "--att3 "  r (1,5) | as.numeric(Action3)==4
+REP3   "--rep3 "  r (1,5) | as.numeric(Action3)==5

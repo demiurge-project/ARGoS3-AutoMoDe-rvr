@@ -1,12 +1,12 @@
 /**
- * @file <src/modules/AutoMoDeCondition.h>
- *
- * @author Antoine Ligot - <aligot@ulb.ac.be>
- *
- * @package ARGoS3-AutoMoDe
- *
- * @license MIT License
- */
+  * @file <src/modules/AutoMoDeCondition.h>
+  *
+  * @author Antoine Ligot - <aligot@ulb.ac.be>
+  *
+  * @package ARGoS3-AutoMoDe
+  *
+  * @license MIT License
+  */
 
 #ifndef AUTOMODECONDITION_H
 #define AUTOMODECONDITION_H
@@ -20,136 +20,135 @@
 
 #include <map>
 
-namespace argos
-{
-	class AutoMoDeCondition
-	{
-	protected:
-		/*
-		 * Map containing all parameters of the condition.
-		 */
-		std::map<std::string, Real> m_mapParameters;
+namespace argos {
+	class AutoMoDeCondition {
+		protected:
+			/*
+			 * Map containing all parameters of the condition.
+			 */
+			std::map<std::string, Real> m_mapParameters;
 
-		/*
-		 * Index of the behaviour at the origin of the condition.
-		 */
-		UInt32 m_unFromBehaviourIndex;
+			/*
+			 * Index of the behaviour at the origin of the condition.
+			 */
+			UInt32 m_unFromBehaviourIndex;
 
-		/*
-		 * Index of the behaviour at the extremity of the condition.
-		 */
-		UInt32 m_unToBehaviourIndex;
+			/*
+			 * Index of the behaviour at the extremity of the condition.
+			 */
+			UInt32 m_unToBehaviourIndex;
 
-		/*
-		 * Name of the condition.
-		 */
-		std::string m_strLabel;
+			/*
+			 * Name of the condition.
+			 */
+			std::string m_strLabel;
 
-		/*
-		 * Index of the condition.
-		 */
-		UInt32 m_unIndex;
+			/*
+			 * Index of the condition.
+			 */
+			UInt32 m_unIndex;
 
-		/*
-		 * Identifier of the condition.
-		 */
-		UInt32 m_unIdentifier;
+			/*
+			 * Identifier of the condition.
+			 */
+			UInt32 m_unIdentifier;
 
-		/*
-		 * Shared pointer to the state of the robot.
-		 */
-		RVRDAO *m_pcRobotDAO;
+			/*
+			 * Shared pointer to the state of the robot.
+			 */
+			RVRDAO* m_pcRobotDAO;
 
-	public:
-		virtual ~AutoMoDeCondition(){};
+		public:
 
-		/*
-		 * Tests whether the condition evaluates to true or false.
-		 */
-		virtual bool Verify() = 0;
+			virtual ~AutoMoDeCondition(){};
 
-		/*
-		 * Reset method.
-		 */
-		virtual void Reset() = 0;
+			/*
+			 * Tests whether the condition evaluates to true or false.
+			 */
+			virtual bool Verify() = 0;
 
-		/**
-		 * Initialize the condition.
-		 */
-		virtual void Init() = 0;
+			/*
+			 * Reset method.
+			 */
+			virtual void Reset() = 0;
 
-		/*
-		 * Returns the DOT description of the condition.
-		 */
-		const std::string GetDOTDescription();
+			/**
+			 * Initialize the condition.
+			 */
+			virtual void Init() = 0;
 
-		/*
-		 * Cloning method.
-		 */
-		virtual AutoMoDeCondition *Clone() = 0;
+			/*
+			 * Returns the DOT description of the condition.
+			 */
+			const std::string GetDOTDescription();
 
-		/*
-		 * Setters for the origin and extremity behaviours of the condition.
-		 */
-		void SetOriginAndExtremity(const UInt32 &un_from, const UInt32 &un_to);
-		void SetOrigin(const UInt32 &un_from);
-		void SetExtremity(const UInt32 &un_to);
+			/*
+			 * Cloning method.
+			 */
+			virtual AutoMoDeCondition* Clone() = 0;
 
-		/*
-		 * Setter and getter for the index of the condition.
-		 */
-		void SetIndex(const UInt32 &un_index);
-		const UInt32 &GetIndex() const;
+			/*
+			 * Setters for the origin and extremity behaviours of the condition.
+			 */
+			void SetOriginAndExtremity(const UInt32& un_from, const UInt32& un_to);
+			void SetOrigin(const UInt32& un_from);
+			void SetExtremity(const UInt32& un_to);
 
-		/*
-		 * Getters for the origin and extremity behaviour of the condition.
-		 */
-		const UInt32 &GetOrigin() const;
-		const UInt32 &GetExtremity() const;
+			/*
+			 * Setter and getter for the index of the condition.
+			 */
+			void SetIndex(const UInt32& un_index);
+			const UInt32& GetIndex() const;
 
-		/*
-		 * Getter and setter for the identifier of the condition.
-		 */
-		void SetIdentifier(const UInt32 &un_id);
-		const UInt32 &GetIdentifier() const;
+			/*
+			 * Getters for the origin and extremity behaviour of the condition.
+			 */
+			const UInt32& GetOrigin() const;
+			const UInt32& GetExtremity() const;
 
-		/*
-		 * Adds a pair <parameter, value> to the parameters map.
-		 */
-		void AddParameter(const std::string &str_identifier, const Real &f_value);
+			/*
+			 * Getter and setter for the identifier of the condition.
+			 */
+			void SetIdentifier(const UInt32& un_id);
+			const UInt32& GetIdentifier() const;
 
-		/*
-		 * Returns the value of a given parameter from the parameters map.
-		 */
-		Real GetParameter(const std::string &str_identifier);
+			/*
+			 * Adds a pair <parameter, value> to the parameters map.
+			 */
+			void AddParameter(const std::string& str_identifier, const Real& f_value);
 
-		/*
-		 * Returns the whole parameter map.
-		 */
-		std::map<std::string, Real> GetParameters() const;
+			/*
+			 * Returns the value of a given parameter from the parameters map.
+			 */
+			Real GetParameter(const std::string& str_identifier);
 
-		/*
-		 * Getter for the name of the label.
-		 */
-		const std::string &GetLabel() const;
+			/*
+			 * Returns the whole parameter map.
+			 */
+			std::map<std::string, Real> GetParameters() const;
 
-		/*
-		 * Setter for the pointer to the robot state.
-		 */
-		void SetRobotDAO(RVRDAO *pc_robot_dao);
+			/*
+			 * Getter for the name of the label.
+			 */
+			const std::string& GetLabel() const;
 
-		/*
-		 * Returns a random value from a Bernoulli distribution.
-		 */
-		bool EvaluateBernoulliProbability(const Real &f_probability) const;
+			/*
+			 * Setter for the pointer to the robot state.
+			 */
+			void SetRobotDAO(RVRDAO* pc_robot_dao);
 
-		CColor GetColorParameter(const UInt32 &un_value);
+			/*
+			 * Returns a random value from a Bernoulli distribution.
+			 */
+			bool EvaluateBernoulliProbability(const Real& f_probability) const;
+			
+			CColor GetColorParameter(const UInt32 &un_value);
 
-		CColor Saturate(CColor pc_color);
+		      CColor Saturate(CColor pc_color);
 
-		CColor GetClosestLabel(CColor pc_color);
+		      CColor GetClosestLabel(CColor pc_color);
 
-		void RGBtoHSV(const CColor &c_color, Real &f_h, Real &f_s, Real &f_v);
+		      void RGBtoHSV(const CColor &c_color, Real &f_h, Real &f_s, Real &f_v);
 	};
 }
 

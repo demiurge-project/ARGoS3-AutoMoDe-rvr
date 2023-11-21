@@ -1,5 +1,5 @@
 /**
-  * @file <src/modules/AutoMoDeBehaviourRepulsion.cpp>
+  * @file <src/modules/AutoMoDeBehaviourPhototaxis.cpp>
   *
   * @author Antoine Ligot - <aligot@ulb.ac.be>
   *
@@ -8,7 +8,7 @@
   * @license MIT License
   */
 
-#include "AutoMoDeBehaviourRepulsion.h"
+#include "AutoMoDeBehaviourPhototaxis.h"
 
 
 namespace argos {
@@ -16,14 +16,14 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeBehaviourRepulsion::AutoMoDeBehaviourRepulsion() {
-		m_strLabel = "Repulsion";
+	AutoMoDeBehaviourPhototaxis::AutoMoDeBehaviourPhototaxis() {
+		m_strLabel = "Phototaxis";
 	}
 
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeBehaviourRepulsion::AutoMoDeBehaviourRepulsion(AutoMoDeBehaviourRepulsion* pc_behaviour) {
+	AutoMoDeBehaviourPhototaxis::AutoMoDeBehaviourPhototaxis(AutoMoDeBehaviourPhototaxis* pc_behaviour) {
 		m_strLabel = pc_behaviour->GetLabel();
 		m_bLocked = pc_behaviour->IsLocked();
 		m_bOperational = pc_behaviour->IsOperational();
@@ -36,39 +36,34 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeBehaviourRepulsion::~AutoMoDeBehaviourRepulsion() {}
+	AutoMoDeBehaviourPhototaxis::~AutoMoDeBehaviourPhototaxis() {}
 
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeBehaviourRepulsion* AutoMoDeBehaviourRepulsion::Clone() {
-		return new AutoMoDeBehaviourRepulsion(this);
+	AutoMoDeBehaviourPhototaxis* AutoMoDeBehaviourPhototaxis::Clone() {
+		return new AutoMoDeBehaviourPhototaxis(this);
 	}
 
 	/****************************************/
 	/****************************************/
 
+	void AutoMoDeBehaviourPhototaxis::ControlStep() {
+		CVector2 sResultVector(0,CRadians::ZERO);
+		CVector2 sLightVector(0,CRadians::ZERO);
+		CVector2 sProxVector(0,CRadians::ZERO);
 
-	void AutoMoDeBehaviourRepulsion::ControlStep() {
-		CVector2 sRabVector(0, CRadians::ZERO);
-		CVector2 sProxVector(0, CRadians::ZERO);
-		CVector2 sResultVector(0, CRadians::ZERO);
-		auto cLidarReading = m_pcRobotDAO->GetAttractionVectorToNeighbors(m_unRepulsionParameter);
+		//CCI_EPuckLightSensor::SReading cLightReading = m_pcRobotDAO->GetLightReading();
+		auto cLidarReading = m_pcRobotDAO->GetAttractionVectorToBeacons();
+		sLightVector = CVector2(cLidarReading.Value, cLidarReading.Angle);
 
-		if (cLidarReading.Value > 0.0f)
-		{
-			sRabVector = CVector2(cLidarReading.Value, cLidarReading.Angle);
-		}
-
-		// Why are we multipliying the repulsion parameter to the readings of the vector?
 		sProxVector = CVector2(m_pcRobotDAO->GetProximityReading().Value, m_pcRobotDAO->GetProximityReading().Angle);
-		sResultVector = -m_unRepulsionParameter * sRabVector - 5 * sProxVector;
+		sResultVector = sLightVector - 5*sProxVector;
 
-		if (sResultVector.Length() < 0.1)
-		{
+		if (sResultVector.Length() < 0.1) {
 			sResultVector = CVector2(1, CRadians::ZERO);
 		}
-
+		
 		m_pcRobotDAO->SetWheelsVelocity(ComputeWheelsVelocityFromVector(sResultVector));
 
 		m_bLocked = false;
@@ -77,20 +72,9 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviourRepulsion::Init() {
-		std::map<std::string, Real>::iterator it;
-
-		// Repulsion parameter
-		it = m_mapParameters.find("rep");
-		if (it != m_mapParameters.end()) {
-			m_unRepulsionParameter = it->second;
-		} else {
-			LOGERR << "[FATAL] Missing parameter for the following behaviour:" << m_strLabel << std::endl;
-			THROW_ARGOSEXCEPTION("Missing Parameter");
-		}
-
+	void AutoMoDeBehaviourPhototaxis::Init() {
 		// Success probability
-		it = m_mapParameters.find("p");
+	  std::map<std::string, Real>::iterator it = m_mapParameters.find("p");
 		if (it != m_mapParameters.end()) {
 			m_fSuccessProbabilityParameter = it->second;
 		} else {
@@ -102,7 +86,7 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviourRepulsion::Reset() {
+	void AutoMoDeBehaviourPhototaxis::Reset() {
 		m_bOperational = false;
 		ResumeStep();
 	}
@@ -110,21 +94,21 @@ namespace argos {
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeBehaviourRepulsion::ResumeStep() {
+	void AutoMoDeBehaviourPhototaxis::ResumeStep() {
 		m_bOperational = true;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	bool AutoMoDeBehaviourRepulsion::Succeeded() {
+	bool AutoMoDeBehaviourPhototaxis::Succeeded() {
 		return EvaluateBernoulliProbability(m_fSuccessProbabilityParameter);
 	}
 
 	/****************************************/
 	/****************************************/
 
-	bool AutoMoDeBehaviourRepulsion::Failed() {
-		return false; //ObstacleInFront();
+	bool AutoMoDeBehaviourPhototaxis::Failed() {
+		return false; //(ObstacleInFront() || !LightPerceived());
 	}
 }

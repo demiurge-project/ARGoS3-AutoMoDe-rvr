@@ -1,5 +1,5 @@
 /*
- * @file <src/core/AutoMoDeController.cpp>
+ * @file <src/core/AutoMoDeControllerBehaviorTree.cpp>
  *
  * @author Antoine Ligot - <aligot@ulb.ac.be>
  *
@@ -10,192 +10,152 @@
 
 #include "AutoMoDeController.h"
 
-namespace argos
-{
+namespace argos {
 
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeController::AutoMoDeController()
-	{
+	AutoMoDeControllerBehaviorTree::AutoMoDeControllerBehaviorTree() {
 		m_pcRobotState = new ReferenceModel1Dot2();
 		m_unTimeStep = 0;
-		m_strFsmConfiguration = "";
+		m_strBtConfiguration = "";
 		m_bMaintainHistory = false;
-		m_bPrintReadableFsm = false;
+		m_bPrintReadableBt = false;
 		m_strHistoryFolder = "./";
-		m_bFiniteStateMachineGiven = false;
+		m_bBehaviorTreeGiven = false;
 		m_bRealRobot = false;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	AutoMoDeController::~AutoMoDeController()
-	{
+	AutoMoDeControllerBehaviorTree::~AutoMoDeControllerBehaviorTree() {
 		delete m_pcRobotState;
-		if (m_strFsmConfiguration.compare("") != 0)
-		{
-			delete m_pcFsmBuilder;
-		}
+		delete m_pcBehaviorTreeBuilder;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeController::Init(TConfigurationNode &t_node)
-	{
+	void AutoMoDeControllerBehaviorTree::Init(TConfigurationNode& t_node) {
 		// Parsing parameters
 		Real ptVelocity = m_pcRobotState->GetMaxVelocity();
-		try
-		{
-			GetNodeAttributeOrDefault(t_node, "fsm-config", m_strFsmConfiguration, m_strFsmConfiguration);
+		try {
+			GetNodeAttributeOrDefault(t_node, "bt-config", m_strBtConfiguration, m_strBtConfiguration);
 			GetNodeAttributeOrDefault(t_node, "history", m_bMaintainHistory, m_bMaintainHistory);
 			GetNodeAttributeOrDefault(t_node, "hist-folder", m_strHistoryFolder, m_strHistoryFolder);
-			GetNodeAttributeOrDefault(t_node, "readable", m_bPrintReadableFsm, m_bPrintReadableFsm);
+			GetNodeAttributeOrDefault(t_node, "readable", m_bPrintReadableBt, m_bPrintReadableBt);
 			GetNodeAttributeOrDefault(t_node, "real-robot", m_bRealRobot, m_bRealRobot);
 			GetNodeAttributeOrDefault(t_node, "velocity", ptVelocity, ptVelocity);
-		}
-		catch (CARGoSException &ex)
-		{
+		} catch (CARGoSException& ex) {
 			THROW_ARGOSEXCEPTION_NESTED("Error parsing <params>", ex);
 		}
+
+		m_unRobotID = atoi(GetId().substr(3, 6).c_str());
 		m_pcRobotState->SetMaxVelocity(ptVelocity);
-		m_unRobotID = atoi(GetId().substr(5, 6).c_str());
 		m_pcRobotState->SetRobotIdentifier(m_unRobotID);
 
 		/*
-		 * If a FSM configuration is given as parameter of the experiment file, create a FSM from it
+		 * If a BT configuration is given as parameter of the experiment file, create a FSM from it
 		 */
-		if (m_strFsmConfiguration.compare("") != 0 && !m_bFiniteStateMachineGiven)
-		{
-			m_pcFsmBuilder = new AutoMoDeFsmBuilder();
-			SetFiniteStateMachine(m_pcFsmBuilder->BuildFiniteStateMachine(m_strFsmConfiguration));
-			if (m_bMaintainHistory)
-			{
-				m_pcFiniteStateMachine->SetHistoryFolder(m_strHistoryFolder);
-				m_pcFiniteStateMachine->MaintainHistory();
+		if (m_strBtConfiguration.compare("") != 0 && !m_bBehaviorTreeGiven) {
+			m_pcBehaviorTreeBuilder = new AutoMoDeBehaviorTreeBuilder();
+			SetBehaviorTree(m_pcBehaviorTreeBuilder->BuildBehaviorTree(m_strBtConfiguration));
+			if (m_bMaintainHistory) {
+				//m_pcBehaviorTree->SetHistoryFolder(m_strHistoryFolder);
+				//m_pcBehaviorTree->MaintainHistory();
 			}
-			if (m_bPrintReadableFsm)
-			{
-				std::cout << "Finite State Machine description: " << std::endl;
-				std::cout << m_pcFiniteStateMachine->GetReadableFormat() << std::endl;
+			if (m_bPrintReadableBt) {
+				std::cout << "Behavior Tree description: " << std::endl;
+				std::cout << m_pcBehaviorTree->GetReadableFormat() << std::endl;
 			}
-		}
-		else
-		{
-			LOGERR << "Warning: No finite state machine configuration found in .argos" << std::endl;
+		} else {
+			LOGERR << "Warning: No behavior tree configuration found in .argos" << std::endl;
 		}
 
 		/*
 		 *  Initializing sensors and actuators
 		 */
-		if (m_bRealRobot)
-		{
-			return;
-		}
-		try
-		{
+		try{
 			m_pcProximitySensor = GetSensor<CCI_RVRProximitySensor>("rvr_proximity");
 			m_pcLightSensor = GetSensor<CCI_RVRLightSensor>("rvr_light");
 			m_pcGroundSensor = GetSensor<CCI_RVRGroundColorSensor>("rvr_ground");
 			m_pcLidarSensor = GetSensor<CCI_RVRLidarSensor>("rvr_lidar");
-			m_pcOmnidirectionalCameraSensor = GetSensor<CCI_RVRColoredBlobOmnidirectionalCameraSensor>("colored_blob_omnidirectional_camera");
+			m_pcOmnidirectionalCameraSensor = GetSensor<CCI_RVRColoredBlobOmnidirectionalCameraSensor>("rvr_colored_blob_omnidirectional_camera");
 			m_pcOmnidirectionalCameraSensor->Enable();
-		}
-		catch (CARGoSException ex)
-		{
-			LOGERR << "Error while initializing a Sensor!\n";
+		} catch (CARGoSException ex) {
+			LOGERR<<"Error while initializing a Sensor!\n";
 		}
 
-		try
-		{
+		try{
 			m_pcWheelsActuator = GetActuator<CCI_RVRWheelsActuator>("rvr_wheels");
-		}
-		catch (CARGoSException ex)
-		{
-			LOGERR << "Error while initializing an Actuator!\n";
+		} catch (CARGoSException ex) {
+			LOGERR<<"Error while initializing an Actuator!\n";
 		}
 
 		/*
 		 * Starts actuation.
 		 */
-		InitializeActuation();
+		 InitializeActuation();
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeController::ControlStep()
-	{
-
+	void AutoMoDeControllerBehaviorTree::ControlStep() {
 		/*
 		 * 1. Update RobotDAO
 		 */
-		if (!m_bRealRobot)
-		{
-			if (m_pcGroundSensor != NULL)
-			{
-				const CCI_RVRGroundColorSensor::SReading &reading = m_pcGroundSensor->GetReading();
-				m_pcRobotState->SetGroundInput(reading);
-			}
-			if (m_pcLightSensor != NULL)
-			{
-				const CCI_RVRLightSensor::SReading &reading = m_pcLightSensor->GetReading();
-				m_pcRobotState->SetLightInput(reading);
-			}
-			if (m_pcProximitySensor != NULL)
-			{
-				const CCI_RVRProximitySensor::TReadings &readings = m_pcProximitySensor->GetReadings();
-				m_pcRobotState->SetProximityInput(readings);
-			}
-			if (m_pcLidarSensor != NULL)
-			{
-				const CCI_RVRLidarSensor::TReadings &readings = m_pcLidarSensor->GetReadings();
-				m_pcRobotState->SetLidarInput(readings);
-			}
-			if (m_pcOmnidirectionalCameraSensor != NULL)
-			{
-				const CCI_RVRColoredBlobOmnidirectionalCameraSensor::SReadings &readings = m_pcOmnidirectionalCameraSensor->GetReadings();
-				m_pcRobotState->SetOmnidirectionalCameraInput(readings);
-			}
+		if (m_pcGroundSensor != NULL) {
+			const CCI_RVRGroundColorSensor::SReading &reading = m_pcGroundSensor->GetReading();
+			m_pcRobotState->SetGroundInput(reading);
+		}
+		if (m_pcLightSensor != NULL) {
+			const CCI_RVRLightSensor::SReading &reading = m_pcLightSensor->GetReading();
+			m_pcRobotState->SetLightInput(reading);
+		}
+		if (m_pcProximitySensor != NULL) {
+			const CCI_RVRProximitySensor::TReadings &readings = m_pcProximitySensor->GetReadings();
+			m_pcRobotState->SetProximityInput(readings);
+		}
+		if (m_pcLidarSensor != NULL) {
+			const CCI_RVRLidarSensor::TReadings &readings = m_pcLidarSensor->GetReadings();
+			m_pcRobotState->SetLidarInput(readings);
+		}
+		if (m_pcOmnidirectionalCameraSensor != NULL) {
+			const CCI_RVRColoredBlobOmnidirectionalCameraSensor::SReadings &readings = m_pcOmnidirectionalCameraSensor->GetReadings();
+			m_pcRobotState->SetOmnidirectionalCameraInput(readings);
 		}
 
 		/*
-		 * 2. Execute step of FSM
+		 * 2. Execute step of running Action of BT
 		 */
-		m_pcFiniteStateMachine->ControlStep();
+		m_pcBehaviorTree->ControlStep();
 
 		/*
 		 * 3. Update Actuators
 		 */
-		if (m_bRealRobot)
-		{
-			// make sure we publish at each time step in case ROS is used
-			m_pcRobotState->SetWheelsVelocity(m_pcRobotState->GetLeftWheelVelocity(), m_pcRobotState->GetRightWheelVelocity());
-		}
-		else
-		{
-			if (m_pcWheelsActuator != NULL)
-			{
-				m_pcWheelsActuator->SetLinearVelocity(m_pcRobotState->GetLeftWheelVelocity(), m_pcRobotState->GetRightWheelVelocity());
-			}
+		if (m_pcWheelsActuator != NULL) {
+			m_pcWheelsActuator->SetLinearVelocity(m_pcRobotState->GetLeftWheelVelocity(),m_pcRobotState->GetRightWheelVelocity());
 		}
 
+		/*
+		 * 4. Update variables and sensors
+		 */
 		m_unTimeStep++;
+
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeController::Destroy() {}
+	void AutoMoDeControllerBehaviorTree::Destroy() {}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeController::Reset()
-	{
-		m_pcFiniteStateMachine->Reset();
+	void AutoMoDeControllerBehaviorTree::Reset() {
+		m_pcBehaviorTree->Reset();
 		m_pcRobotState->Reset();
 		// Restart actuation.
 		InitializeActuation();
@@ -204,31 +164,17 @@ namespace argos
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeController::SetFiniteStateMachine(AutoMoDeFiniteStateMachine *pc_finite_state_machine)
-	{
-		m_pcFiniteStateMachine = pc_finite_state_machine;
-		m_pcFiniteStateMachine->SetRobotDAO(m_pcRobotState);
-		m_pcFiniteStateMachine->Init();
-		m_bFiniteStateMachineGiven = true;
+	void AutoMoDeControllerBehaviorTree::SetBehaviorTree(AutoMoDeBehaviorTree* pc_behaviour_tree) {
+		m_pcBehaviorTree = pc_behaviour_tree;
+		m_pcBehaviorTree->SetRobotDAO(m_pcRobotState);
+		m_pcBehaviorTree->Init();
+		m_bBehaviorTreeGiven = true;
 	}
 
 	/****************************************/
 	/****************************************/
 
-	void AutoMoDeController::SetHistoryFlag(bool b_history_flag)
-	{
-		if (b_history_flag)
-		{
-			m_pcFiniteStateMachine->MaintainHistory();
-		}
-	}
+	void AutoMoDeControllerBehaviorTree::InitializeActuation() {}
 
-	/****************************************/
-	/****************************************/
-
-	void AutoMoDeController::InitializeActuation()
-	{
-	}
-
-	REGISTER_CONTROLLER(AutoMoDeController, "automode_controller");
+	REGISTER_CONTROLLER(AutoMoDeControllerBehaviorTree, "automode_controller_bt");
 }
